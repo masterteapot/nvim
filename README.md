@@ -1,0 +1,2 @@
+# nvim
+ Jareds Neovim Config
