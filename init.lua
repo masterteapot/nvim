@@ -3,4 +3,6 @@ require "user.options"
 require "user.plugins"
 require "user.autocommands"
 require "user.colorscheme"
-
+require "user.nvim-tree"
+require "user.lsp"
+require "user.cmp"

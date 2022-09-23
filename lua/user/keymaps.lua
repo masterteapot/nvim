@@ -33,6 +33,17 @@ keymap("n", "<m-t>", ":tabnew %<cr>", opts)
 keymap("n", "<S-enter>", ":tabclose<cr>", opts)
 keymap("n", "<m-\\>", ":tabonly<cr>", opts)
 
+-- Copy and paste --
+keymap("n", "<leader>y", "\"+y", opts)
+keymap("n", "<leader>Y", "\"+yg_", opts)
+keymap("n", "<leader>y", "\"+y", opts)
+
+-- Paste from clipboard
+keymap("n", "<leader>p" ,"\"+p", opts)
+keymap("n", "<leader>P", "\"+P", opts)
+keymap("n", "<leader>p", "\"+p", opts)
+keymap("n", "<leader>P", "\"+P", opts)
+
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
@@ -101,6 +112,8 @@ keymap("n", "<C-p>", "<cmd>Telescope projects<cr>", opts)
 -- Plugin specific keymaps 
 keymap("n", "<C-M>", "<cmd>MarkdownPreviewToggle<cr>", opts)
 
+-- Nvim Tree
+keymap("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", opts)
 
 -- alt binds
 keymap("n", "<m-v>", "<cmd>vsplit<cr>", opts)

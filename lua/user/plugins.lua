@@ -59,6 +59,10 @@ return packer.startup(function(use)
   use "kyazdani42/nvim-tree.lua"
   use "folke/which-key.nvim"
   use "folke/todo-comments.nvim"
+  use {
+    "SmiteshP/nvim-navic",
+    requires = "neovim/nvim-lspconfig",
+  }
 
   -- Colorschemes
   use "folke/tokyonight.nvim"
@@ -69,12 +73,17 @@ return packer.startup(function(use)
   use "sainnhe/sonokai"
 
   -- cmp plugins
-  use { "hrsh7th/nvim-cmp" }
---   use "hrsh7th/cmp-buffer" -- buffer completions
---   use "hrsh7th/cmp-path" -- path completions
---   use "hrsh7th/cmp-cmdline" -- cmdline completions
+  use "hrsh7th/nvim-cmp"
+  use "hrsh7th/cmp-buffer" -- buffer completions
+  use "hrsh7th/cmp-path" -- path completions
+  use "hrsh7th/cmp-cmdline" -- cmdline completions
+  use "saadparwaiz1/cmp_luasnip" -- snippet completions
+  use "hrsh7th/cmp-nvim-lsp"
+  use "hrsh7th/cmp-emoji"
+  use "hrsh7th/cmp-nvim-lua"
 
   -- snippets
+  use "L3MON4D3/LuaSnip" --snippet engine
 
   -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
