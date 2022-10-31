@@ -124,6 +124,16 @@ _G.packer_plugins = {
     path = "/home/jared/.local/share/nvim/site/pack/packer/start/darkplus.nvim",
     url = "https://github.com/lunarvim/darkplus.nvim"
   },
+  fd = {
+    loaded = true,
+    path = "/home/jared/.local/share/nvim/site/pack/packer/start/fd",
+    url = "https://github.com/sharkdp/fd"
+  },
+  harpoon = {
+    loaded = true,
+    path = "/home/jared/.local/share/nvim/site/pack/packer/start/harpoon",
+    url = "https://github.com/ThePrimeagen/harpoon"
+  },
   ["lua-dev.nvim"] = {
     loaded = true,
     path = "/home/jared/.local/share/nvim/site/pack/packer/start/lua-dev.nvim",
@@ -211,10 +221,20 @@ _G.packer_plugins = {
     path = "/home/jared/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
+  ripgrep = {
+    loaded = true,
+    path = "/home/jared/.local/share/nvim/site/pack/packer/start/ripgrep",
+    url = "https://github.com/BurntSushi/ripgrep"
+  },
   sonokai = {
     loaded = true,
     path = "/home/jared/.local/share/nvim/site/pack/packer/start/sonokai",
     url = "https://github.com/sainnhe/sonokai"
+  },
+  ["telescope-fzf-native.nvim"] = {
+    loaded = true,
+    path = "/home/jared/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,

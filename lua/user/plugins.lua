@@ -95,9 +95,13 @@ return packer.startup(function(use)
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
+  use "ThePrimeagen/harpoon"
+  use "sharkdp/fd" -- finder for Telescope
+  use "BurntSushi/ripgrep" -- For live_grep
+  use "nvim-telescope/telescope-fzf-native.nvim" -- For faster sorting
 
   -- Treesitter
-  use "nvim-treesitter/nvim-treesitter"
+  use "nvim-treesitter/nvim-treesitter" -- Also telescope live preview
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

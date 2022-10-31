@@ -11,7 +11,7 @@ keymap("n", "<Space>", "", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 keymap("n", "<C-Space>", "<cmd>WhichKey \\<leader><cr>", opts)
-keymap("n", "<C-i>", "<C-i>", opts)
+-- keymap("n", "<C-i>", "<C-i>", opts)
 
 -- Modes
 --   normal_mode = "n",
@@ -38,17 +38,24 @@ keymap("n", "<leader>y", "\"+y", opts)
 keymap("n", "<leader>Y", "\"+yg_", opts)
 keymap("n", "<leader>y", "\"+y", opts)
 
+
 -- Paste from clipboard
 keymap("n", "<leader>p" ,"\"+p", opts)
 keymap("n", "<leader>P", "\"+P", opts)
-keymap("n", "<leader>p", "\"+p", opts)
-keymap("n", "<leader>P", "\"+P", opts)
+keymap("v", "<leader>p", "\"+p", opts)
+keymap("v", "<leader>P", "\"+P", opts)
+keymap("x", "<leader>p", "\"+p", opts)
+keymap("x", "<leader>P", "\"+P", opts)
+keymap("o", "<leader>p", "\"+p", opts)
+keymap("o", "<leader>P", "\"+P", opts)
+
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
 keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+
 
 -- I hate typing these
 keymap("n", "H", "^", opts)
@@ -60,27 +67,33 @@ keymap("x", "L", "$", opts)
 keymap("o", "H", "^", opts)
 keymap("o", "L", "$", opts)
 
+
 -- Quick Save
 keymap("n", "<C-s>", ":w<cr>", opts)
 keymap("v", "<C-s>", ":w<cr>", opts)
 keymap("x", "<C-s>", ":w<cr>", opts)
 keymap("o", "<C-s>", ":w<cr>", opts)
 
+
 -- Insert new line without insert mode
 keymap("n", "oo", "o<Esc>k", opts)
 keymap("n", "OO", "O<Esc>j", opts)
 
+
 -- Insert --
 -- Press jk fast to enter
 keymap("i", "jk", "<ESC>", opts)
+
 
 -- Visual --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
+
 -- Move text up and down
 keymap("v", "p", '"_dP', opts)
+
 
 -- Visual Block --
 -- Move text up and down
@@ -89,25 +102,49 @@ keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
--- Terminal --
+
 -- Better terminal navigation
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
+
+-- Telescope Keymaps
+vim.api.nvim_set_keymap("n", "<m-m>", "<cmd>lua require('telescope').extensions.harpoon.marks(require('telescope.themes').get_dropdown{previewer = true, initial_mode='normal', prompt_title='Harpoon'})<cr>", opts)
+vim.api.nvim_set_keymap("n", "<m-b>", "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false, initial_mode='normal'})<cr>", opts)
+vim.api.nvim_set_keymap("n", "<m-g>", "<cmd>Telescope git_branches<cr>", opts)
+vim.api.nvim_set_keymap(
+  "n",
+  "<m-f>",
+  "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = true})<cr>",
+  opts
+)
+keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
+
+
+
+-- Harpoon Keymaps
+keymap("n", "<leader>ha", ':lua require("harpoon.mark").add_file()<CR>', opts)
+keymap("n", "<leader>ht", ':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
+keymap("n", "<leader>hc", ':lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>', opts)
+keymap("n", "<leader>hn", ':lua require("harpoon.ui").nav_next()<CR>', opts)
+keymap("n", "<leader>hb", ':lua require("harpoon.ui").nav_prev()<CR>', opts)
+keymap("n", "<leader>1", ':lua require("harpoon.ui").nav_file(1)<CR>', opts)
+keymap("n", "<leader>2", ':lua require("harpoon.ui").nav_file(2)<CR>', opts)
+keymap("n", "<leader>3", ':lua require("harpoon.ui").nav_file(3)<CR>', opts)
+keymap("n", "<leader>4", ':lua require("harpoon.ui").nav_file(4)<CR>', opts)
+keymap("n", "<leader>5", ':lua require("harpoon.ui").nav_file(5)<CR>', opts)
+
+
 -- NOTE: the fact that tab and ctrl-i are the same is stupid
 keymap("n", "Q", "<cmd>Bdelete!<CR>", opts)
-keymap("n", "<F1>", ":e ~/.config/nvim/<cr>", opts)
 keymap("n", "<F2>", "<cmd>MarkdownPreviewToggle<cr>", opts)
 keymap("n", "<F4>", "<cmd>Telescope keymaps<cr>", opts)
 keymap("n", "<F5>", "<cmd>Telescope commands<CR>", opts)
--- keymap("n", "<F7>", "<cmd>TSHighlightCapturesUnderCursor<cr>", opts)
--- keymap("n", "<F8>", "<cmd>TSPlaygroundToggle<cr>", opts)
 keymap("n", "<F11>", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 keymap("n", "<F12>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 keymap("v", "//", [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], opts)
-keymap("n", "<C-p>", "<cmd>Telescope projects<cr>", opts)
 
 -- Plugin specific keymaps 
 keymap("n", "<C-M>", "<cmd>MarkdownPreviewToggle<cr>", opts)
@@ -132,31 +169,11 @@ M.show_documentation = function()
 end
 vim.api.nvim_set_keymap("n", "K", ":lua require('user.keymaps').show_documentation()<CR>", opts)
 
-vim.api.nvim_set_keymap(
-  "n",
-  "<m-f>",
-  "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-  opts
-)
+
 -- Comment
 keymap("n", "<m-/>", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)
 keymap("x", "<m-/>", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', opts)
 
-vim.api.nvim_set_keymap(
-  "n",
-  "<tab>",
-  "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-  opts
-)
-
-vim.api.nvim_set_keymap("n", "<tab>", "<cmd>lua require('telescope.builtin').extensions.harpoon.marks(require('telescope.themes').get_dropdown{previewer = false, initial_mode='normal'})<cr>", opts)
-
-
-vim.api.nvim_set_keymap("n", "<tab>", "<cmd>lua require('telescope').extensions.harpoon.marks(require('telescope.themes').get_dropdown{previewer = false, initial_mode='normal', prompt_title='Harpoon'})<cr>", opts)
-vim.api.nvim_set_keymap("n", "<s-tab>", "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false, initial_mode='normal'})<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<tab>", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)
-vim.api.nvim_set_keymap("n", "<m-g>", "<cmd>Telescope git_branches<cr>", opts)
--- l = { "<cmd>lua require('user.bfs').open()<cr>", "Buffers" },
 
 vim.cmd [[
   function! QuickFixToggle()
@@ -167,6 +184,7 @@ vim.cmd [[
     endif
   endfunction
 ]]
+
 
 keymap("n", "<m-q>", ":call QuickFixToggle()<cr>", opts)
 
