@@ -24,9 +24,8 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>ld', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', '<space>lr', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<space>lc', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('n', '<space>lf', vim.lsp.buf.formatting_sync, bufopts) -- TODO This does not seem to work
 end
-
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
   debounce_text_changes = 150,

@@ -111,17 +111,12 @@ keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 
 -- Telescope Keymaps
-vim.api.nvim_set_keymap("n", "<m-m>", "<cmd>lua require('telescope').extensions.harpoon.marks(require('telescope.themes').get_dropdown{previewer = true, initial_mode='normal', prompt_title='Harpoon'})<cr>", opts)
-vim.api.nvim_set_keymap("n", "<m-b>", "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false, initial_mode='normal'})<cr>", opts)
-vim.api.nvim_set_keymap("n", "<m-g>", "<cmd>Telescope git_branches<cr>", opts)
-vim.api.nvim_set_keymap(
-  "n",
-  "<m-f>",
-  "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = true})<cr>",
-  opts
-)
+vim.api.nvim_set_keymap("n", "<leader>fm", "<cmd>lua require('telescope').extensions.harpoon.marks(require('telescope.themes').get_dropdown{initial_mode='normal', prompt_title='Harpoon'})<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{initial_mode='normal'})<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>Telescope git_branches<cr>", opts)
+keymap("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
-
+keymap("n", "<leader>FF", ":lua require('telescope.builtin').live_grep({prompt_title = 'find string in open buffers...', grep_open_files = true})<cr>", opts)
 
 
 -- Harpoon Keymaps
@@ -138,7 +133,7 @@ keymap("n", "<leader>5", ':lua require("harpoon.ui").nav_file(5)<CR>', opts)
 
 
 -- NOTE: the fact that tab and ctrl-i are the same is stupid
-keymap("n", "Q", "<cmd>Bdelete!<CR>", opts)
+keymap("n", "Q", "<cmd>bdelete!<CR>", opts)
 keymap("n", "<F2>", "<cmd>MarkdownPreviewToggle<cr>", opts)
 keymap("n", "<F4>", "<cmd>Telescope keymaps<cr>", opts)
 keymap("n", "<F5>", "<cmd>Telescope commands<CR>", opts)
@@ -168,11 +163,6 @@ M.show_documentation = function()
   end
 end
 vim.api.nvim_set_keymap("n", "K", ":lua require('user.keymaps').show_documentation()<CR>", opts)
-
-
--- Comment
-keymap("n", "<m-/>", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)
-keymap("x", "<m-/>", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', opts)
 
 
 vim.cmd [[

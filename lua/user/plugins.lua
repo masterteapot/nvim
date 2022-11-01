@@ -72,36 +72,47 @@ return packer.startup(function(use)
   use "tanvirtin/monokai.nvim"
   use "sainnhe/sonokai"
 
-  -- cmp plugins
-  use "hrsh7th/nvim-cmp"
-  use "hrsh7th/cmp-buffer" -- buffer completions
-  use "hrsh7th/cmp-path" -- path completions
-  use "hrsh7th/cmp-cmdline" -- cmdline completions
-  use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "hrsh7th/cmp-nvim-lsp"
-  use "hrsh7th/cmp-emoji"
-  use "hrsh7th/cmp-nvim-lua"
-
-  -- snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
 
   -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 
+
+  -- cmp plugins
+  use "hrsh7th/cmp-nvim-lsp"
+  use "hrsh7th/cmp-buffer" -- buffer completions
+  use "hrsh7th/cmp-path" -- path completions
+  use "hrsh7th/cmp-cmdline" -- cmdline completions
+  use "hrsh7th/cmp-emoji"
+  use "hrsh7th/cmp-nvim-lua"
+  use "hrsh7th/nvim-cmp"
+
+
+  -- snippets
+  use "L3MON4D3/LuaSnip" --snippet engine
+  use "saadparwaiz1/cmp_luasnip" -- snippet completions
+
+  
+  -- Comments
+  use "terrortylor/nvim-comment"
+
   -- Lua
   use "folke/lua-dev.nvim"
+
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
   use "ThePrimeagen/harpoon"
   use "sharkdp/fd" -- finder for Telescope
   use "BurntSushi/ripgrep" -- For live_grep
-  use "nvim-telescope/telescope-fzf-native.nvim" -- For faster sorting
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+  use 'kyazdani42/nvim-web-devicons'
+
 
   -- Treesitter
   use "nvim-treesitter/nvim-treesitter" -- Also telescope live preview
+
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
