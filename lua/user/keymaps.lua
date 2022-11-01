@@ -110,13 +110,19 @@ keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 
+-- Quick Sourcing
+keymap("n", "<leader>s", ":source %<cr>", opts)
+keymap("n", "<leader>S", ":luafile %<cr>", opts)
+
+
 -- Telescope Keymaps
-vim.api.nvim_set_keymap("n", "<leader>fm", "<cmd>lua require('telescope').extensions.harpoon.marks(require('telescope.themes').get_dropdown{initial_mode='normal', prompt_title='Harpoon'})<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{initial_mode='normal'})<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>Telescope git_branches<cr>", opts)
+keymap("n", "<leader>fm", "<cmd>lua require('telescope').extensions.harpoon.marks(require('telescope.themes').get_dropdown{initial_mode='normal', prompt_title='Harpoon'})<cr>", opts)
+keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{initial_mode='normal'})<cr>", opts)
+keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').git_branches<cr>", opts)
+keymap("n", "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find sorting_strategy=ascending<cr>", opts)
 keymap("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
-keymap("n", "<leader>FF", ":lua require('telescope.builtin').live_grep({prompt_title = 'find string in open buffers...', grep_open_files = true})<cr>", opts)
+keymap("n", "<leader>FF", "<cmd>lua require('telescope.builtin').live_grep({prompt_title = 'find string in open buffers...', grep_open_files = true})<cr>", opts)
 
 
 -- Harpoon Keymaps

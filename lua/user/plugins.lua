@@ -42,10 +42,9 @@ packer.init {
 return packer.startup(function(use)
   use "wbthomason/packer.nvim" -- Have packer manage itself
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
-  use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
   use "nvim-lua/popup.nvim"
   use "akinsho/toggleterm.nvim"
-  
+
   -- Lua
   use "kylechui/nvim-surround"
   use {
@@ -77,6 +76,7 @@ return packer.startup(function(use)
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+  use "windwp/nvim-ts-autotag" -- for HTML and PHP tag functionality
 
 
   -- cmp plugins
@@ -87,13 +87,14 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-emoji"
   use "hrsh7th/cmp-nvim-lua"
   use "hrsh7th/nvim-cmp"
+  use "windwp/nvim-autopairs" -- Autopairs, integrates with cmp / config with cmp file
 
 
   -- snippets
   use "L3MON4D3/LuaSnip" --snippet engine
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
 
-  
+
   -- Comments
   use "terrortylor/nvim-comment"
 
