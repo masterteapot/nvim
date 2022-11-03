@@ -33,6 +33,10 @@ require("lspconfig")["sumneko_lua"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
 })
+require("lspconfig")["eslint"].setup({
+	on_attach = on_attach,
+	flags = lsp_flags,
+})
 
 local util = require("lspconfig.util")
 

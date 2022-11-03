@@ -95,3 +95,6 @@ require('lspconfig')['intelephense'].setup {
 require('lspconfig')['sumneko_lua'].setup {
   capabilities = capabilities
 }
+require('lspconfig')['eslint'].setup {
+  capabilities = capabilities
+}
