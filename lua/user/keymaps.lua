@@ -34,28 +34,25 @@ keymap("n", "<S-enter>", ":tabclose<cr>", opts)
 keymap("n", "<m-\\>", ":tabonly<cr>", opts)
 
 -- Copy and paste --
-keymap("n", "<leader>y", "\"+y", opts)
-keymap("n", "<leader>Y", "\"+yg_", opts)
-keymap("n", "<leader>y", "\"+y", opts)
-
+keymap("n", "<leader>y", '"+y', opts)
+keymap("n", "<leader>Y", '"+yg_', opts)
+keymap("n", "<leader>y", '"+y', opts)
 
 -- Paste from clipboard
-keymap("n", "<leader>p" ,"\"+p", opts)
-keymap("n", "<leader>P", "\"+P", opts)
-keymap("v", "<leader>p", "\"+p", opts)
-keymap("v", "<leader>P", "\"+P", opts)
-keymap("x", "<leader>p", "\"+p", opts)
-keymap("x", "<leader>P", "\"+P", opts)
-keymap("o", "<leader>p", "\"+p", opts)
-keymap("o", "<leader>P", "\"+P", opts)
-
+keymap("n", "<leader>p", '"+p', opts)
+keymap("n", "<leader>P", '"+P', opts)
+keymap("v", "<leader>p", '"+p', opts)
+keymap("v", "<leader>P", '"+P', opts)
+keymap("x", "<leader>p", '"+p', opts)
+keymap("x", "<leader>P", '"+P', opts)
+keymap("o", "<leader>p", '"+p', opts)
+keymap("o", "<leader>P", '"+P', opts)
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
 keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
-
 
 -- I hate typing these
 keymap("n", "H", "^", opts)
@@ -67,33 +64,27 @@ keymap("x", "L", "$", opts)
 keymap("o", "H", "^", opts)
 keymap("o", "L", "$", opts)
 
-
 -- Quick Save
 keymap("n", "<C-s>", ":w<cr>", opts)
 keymap("v", "<C-s>", ":w<cr>", opts)
 keymap("x", "<C-s>", ":w<cr>", opts)
 keymap("o", "<C-s>", ":w<cr>", opts)
 
-
 -- Insert new line without insert mode
 keymap("n", "oo", "o<Esc>k", opts)
 keymap("n", "OO", "O<Esc>j", opts)
 
-
 -- Insert --
 -- Press jk fast to enter
 keymap("i", "jk", "<ESC>", opts)
-
 
 -- Visual --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
-
 -- Move text up and down
 keymap("v", "p", '"_dP', opts)
-
 
 -- Visual Block --
 -- Move text up and down
@@ -102,28 +93,34 @@ keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
-
 -- Better terminal navigation
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
-
 -- Quick Sourcing
 keymap("n", "<leader>s", ":source %<cr>", opts)
 keymap("n", "<leader>S", ":luafile %<cr>", opts)
 
-
 -- Telescope Keymaps
-keymap("n", "<leader>fm", "<cmd>lua require('telescope').extensions.harpoon.marks(require('telescope.themes').get_dropdown{initial_mode='normal', prompt_title='Harpoon'})<cr>", opts)
-keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{initial_mode='normal'})<cr>", opts)
+keymap("n", "<leader>fm", "<cmd>lua require('telescope').extensions.harpoon.marks({initial_mode='normal'})<cr>", opts)
+keymap(
+	"n",
+	"<leader>fb",
+	"<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{initial_mode='normal'})<cr>",
+	opts
+)
 keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').git_branches<cr>", opts)
 keymap("n", "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find sorting_strategy=ascending<cr>", opts)
 keymap("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
-keymap("n", "<leader>FF", "<cmd>lua require('telescope.builtin').live_grep({prompt_title = 'find string in open buffers...', grep_open_files = true})<cr>", opts)
-
+keymap(
+	"n",
+	"<leader>FF",
+	"<cmd>lua require('telescope.builtin').live_grep({prompt_title = 'find string in open buffers...', grep_open_files = true})<cr>",
+	opts
+)
 
 -- Harpoon Keymaps
 keymap("n", "<leader>ha", ':lua require("harpoon.mark").add_file()<CR>', opts)
@@ -137,6 +134,17 @@ keymap("n", "<leader>3", ':lua require("harpoon.ui").nav_file(3)<CR>', opts)
 keymap("n", "<leader>4", ':lua require("harpoon.ui").nav_file(4)<CR>', opts)
 keymap("n", "<leader>5", ':lua require("harpoon.ui").nav_file(5)<CR>', opts)
 
+-- LSP keymaps
+keymap("n", "K", "<cmd> lua vim.lsp.buf.hover()<CR>", opts)
+keymap("n", "<C-k>", "<cmd> lua vim.lsp.buf.signature_help()<CR>", opts)
+keymap("n", "gD", "<cmd> lua vim.lsp.buf.declaration()<CR>", opts)
+keymap("n", "gd", "<cmd> lua vim.lsp.buf.definition()<CR>", opts)
+keymap("n", "gi", "<cmd> lua vim.lsp.buf.implementation()<CR>", opts)
+keymap("n", "gr", "<cmd> lua vim.lsp.buf.references()<CR>", opts)
+keymap("n", "<leader>ld", "<cmd> lua vim.lsp.buf.type_definition()<CR>", opts)
+keymap("n", "<leader>lr", "<cmd> lua vim.lsp.buf.rename()<CR>", opts)
+keymap("n", "<leader>lc", "<cmd> lua vim.lsp.buf.code_action()<CR>", opts)
+keymap("n", "<leader>lf", "<cmd> lua vim.lsp.buf.formatting_sync()<CR>", opts)
 
 -- NOTE: the fact that tab and ctrl-i are the same is stupid
 keymap("n", "Q", "<cmd>bdelete!<CR>", opts)
@@ -147,7 +155,7 @@ keymap("n", "<F11>", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 keymap("n", "<F12>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 keymap("v", "//", [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], opts)
 
--- Plugin specific keymaps 
+-- Plugin specific keymaps
 keymap("n", "<C-M>", "<cmd>MarkdownPreviewToggle<cr>", opts)
 
 -- Nvim Tree
@@ -157,21 +165,20 @@ keymap("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", opts)
 keymap("n", "<m-v>", "<cmd>vsplit<cr>", opts)
 
 M.show_documentation = function()
-  local filetype = vim.bo.filetype
-  if vim.tbl_contains({ "vim", "help" }, filetype) then
-    vim.cmd("h " .. vim.fn.expand "<cword>")
-  elseif vim.tbl_contains({ "man" }, filetype) then
-    vim.cmd("Man " .. vim.fn.expand "<cword>")
-  elseif vim.fn.expand "%:t" == "Cargo.toml" then
-    require("crates").show_popup()
-  else
-    vim.lsp.buf.hover()
-  end
+	local filetype = vim.bo.filetype
+	if vim.tbl_contains({ "vim", "help" }, filetype) then
+		vim.cmd("h " .. vim.fn.expand("<cword>"))
+	elseif vim.tbl_contains({ "man" }, filetype) then
+		vim.cmd("Man " .. vim.fn.expand("<cword>"))
+	elseif vim.fn.expand("%:t") == "Cargo.toml" then
+		require("crates").show_popup()
+	else
+		vim.lsp.buf.hover()
+	end
 end
 vim.api.nvim_set_keymap("n", "K", ":lua require('user.keymaps').show_documentation()<CR>", opts)
 
-
-vim.cmd [[
+vim.cmd([[
   function! QuickFixToggle()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
       copen
@@ -179,8 +186,7 @@ vim.cmd [[
       cclose
     endif
   endfunction
-]]
-
+]])
 
 keymap("n", "<m-q>", ":call QuickFixToggle()<cr>", opts)
 
