@@ -112,8 +112,10 @@ keymap(
 	opts
 )
 keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').git_branches<cr>", opts)
+keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>", opts)
 keymap("n", "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find sorting_strategy=ascending<cr>", opts)
 keymap("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
+keymap("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
 keymap(
 	"n",
@@ -135,16 +137,20 @@ keymap("n", "<leader>4", ':lua require("harpoon.ui").nav_file(4)<CR>', opts)
 keymap("n", "<leader>5", ':lua require("harpoon.ui").nav_file(5)<CR>', opts)
 
 -- LSP keymaps
-keymap("n", "K", "<cmd> lua vim.lsp.buf.hover()<CR>", opts)
-keymap("n", "<C-k>", "<cmd> lua vim.lsp.buf.signature_help()<CR>", opts)
-keymap("n", "gD", "<cmd> lua vim.lsp.buf.declaration()<CR>", opts)
-keymap("n", "gd", "<cmd> lua vim.lsp.buf.definition()<CR>", opts)
-keymap("n", "gi", "<cmd> lua vim.lsp.buf.implementation()<CR>", opts)
-keymap("n", "gr", "<cmd> lua vim.lsp.buf.references()<CR>", opts)
-keymap("n", "<leader>ld", "<cmd> lua vim.lsp.buf.type_definition()<CR>", opts)
-keymap("n", "<leader>lr", "<cmd> lua vim.lsp.buf.rename()<CR>", opts)
-keymap("n", "<leader>lc", "<cmd> lua vim.lsp.buf.code_action()<CR>", opts)
-keymap("n", "<leader>lf", "<cmd> lua vim.lsp.buf.formatting_sync()<CR>", opts)
+keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+keymap("n", "<leader>ld", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", opts)
+
+
+-- Python keymaps
+keymap("n", "<leader>yr", "<cmd>exe 'w' | exe '!python %'<CR>", opts)
 
 -- NOTE: the fact that tab and ctrl-i are the same is stupid
 keymap("n", "Q", "<cmd>bdelete!<CR>", opts)

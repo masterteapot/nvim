@@ -1,9 +1,9 @@
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = false }
-vim.keymap.set("n", "<space>lh", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<space>K", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<space>lq", vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
@@ -21,10 +21,6 @@ local lsp_flags = {
 	-- This is the default in Nvim 0.7+
 	debounce_text_changes = 150,
 }
-require("lspconfig")["pyright"].setup({
-	on_attach = on_attach,
-	flags = lsp_flags,
-})
 require("lspconfig")["intelephense"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
@@ -38,14 +34,37 @@ require("lspconfig")["eslint"].setup({
 	flags = lsp_flags,
 })
 
+-- Python Setup
 local util = require("lspconfig.util")
+local path = util.path
 
+local function get_python_path(workspace)
+  -- Use activated virtualenv.
+  if vim.env.VIRTUAL_ENV then
+    return path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
+  end
+
+  -- Find and use virtualenv in workspace directory.
+	local match = vim.fn.glob(path.join("/home/jared/.pyenv", "jareds-venv", 'pyvenv.cfg'))
+	if match ~= '' then
+	  return path.join(path.dirname(match), 'bin', 'python')
+	end
+
+  -- Fallback to system Python.
+  return exepath('python3') or exepath('python') or 'python'
+end
+
+require("lspconfig")["pyright"].setup({
+  before_init = function(_, config)
+    config.settings.python.pythonPath = get_python_path(config.root_dir)
+  end,
+	on_attach = on_attach,
+	flags = lsp_flags,
+})
+
+-- PHP Setup
 local bin_name = "intelephense"
 local cmd = { bin_name, "--stdio" }
-
-if vim.fn.has("win32") == 1 then
-	cmd = { "cmd.exe", "/C", bin_name, "--stdio" }
-end
 
 return {
 	default_config = {
@@ -60,13 +79,6 @@ return {
 		end,
 	},
 	docs = {
-		description = [[
-https://intelephense.com/
-`intelephense` can be installed via `npm`:
-```sh
-npm install -g intelephense
-```
-]],
 		default_config = {
 			root_dir = [[root_pattern("composer.json", ".git")]],
 			init_options = [[{
