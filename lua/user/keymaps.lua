@@ -38,6 +38,10 @@ keymap("n", "<leader>y", '"+y', opts)
 keymap("n", "<leader>Y", '"+yg_', opts)
 keymap("n", "<leader>y", '"+y', opts)
 
+-- Increment and decrease a number --
+keymap("n", "+", "<C-x>", opts)
+keymap("n", "-", "<C-a>", opts)
+
 -- Paste from clipboard
 keymap("n", "<leader>p", '"+p', opts)
 keymap("n", "<leader>P", '"+P', opts)
@@ -94,10 +98,13 @@ keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
 -- Better terminal navigation
-keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
-keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
-keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
-keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+keymap("t", "<A-h>", "<C-\\><C-N><C-w>h", term_opts)
+keymap("t", "<A-j>", "<C-\\><C-N><C-w>j", term_opts)
+keymap("t", "<A-k>", "<C-\\><C-N><C-w>k", term_opts)
+keymap("t", "<A-l>", "<C-\\><C-N><C-w>l", term_opts)
+keymap("t", "<Esc>", "<C-\\><C-n>", term_opts)
+
+
 
 -- Quick Sourcing
 keymap("n", "<leader>s", ":source %<cr>", opts)
