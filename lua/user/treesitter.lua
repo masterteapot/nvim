@@ -3,8 +3,8 @@ require 'nvim-treesitter.configs'.setup {
 		enable = true,
 		filetypes = { "html", "xml", "php" },
 	},
-	--   highlight = {
-	-- 	-- `false` will disable the whole extension
-	-- 	enable = true,
-	-- }
+	  highlight = {
+		-- `false` will disable the whole extension
+		enable = true,
+	}
 }
