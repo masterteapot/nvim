@@ -33,14 +33,19 @@ keymap("n", "<m-t>", ":tabnew %<cr>", opts)
 keymap("n", "<S-enter>", ":tabclose<cr>", opts)
 keymap("n", "<m-\\>", ":tabonly<cr>", opts)
 
--- Copy and paste --
-keymap("n", "<leader>y", '"+y', opts)
-keymap("n", "<leader>Y", '"+yg_', opts)
-keymap("n", "<leader>y", '"+y', opts)
-
 -- Increment and decrease a number --
 keymap("n", "+", "<C-a>", opts)
 keymap("n", "-", "<C-x>", opts)
+
+-- Copy and paste --
+keymap("n", "<leader>y", '"+y', opts)
+keymap("n", "<leader>Y", '"+yg_', opts)
+keymap("v", "<leader>y", '"+y', opts)
+keymap("v", "<leader>Y", '"+yg_', opts)
+keymap("x", "<leader>y", '"+y', opts)
+keymap("x", "<leader>Y", '"+yg_', opts)
+keymap("o", "<leader>y", '"+y', opts)
+keymap("o", "<leader>Y", '"+yg_', opts)
 
 -- Paste from clipboard
 keymap("n", "<leader>p", '"+p', opts)
@@ -79,8 +84,6 @@ keymap("n", "oo", "o<Esc>k", opts)
 keymap("n", "OO", "O<Esc>j", opts)
 
 -- Insert --
--- Press jk fast to enter
-keymap("i", "jk", "<ESC>", opts)
 
 -- Visual --
 -- Stay in indent mode
@@ -103,7 +106,6 @@ keymap("t", "<A-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<A-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<A-l>", "<C-\\><C-N><C-w>l", term_opts)
 keymap("t", "<Esc>", "<C-\\><C-n>", term_opts)
-
 
 
 -- Quick Sourcing

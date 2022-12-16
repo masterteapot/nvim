@@ -55,11 +55,21 @@ local function get_python_path(workspace)
 end
 
 require("lspconfig")["pyright"].setup({
-  before_init = function(_, config)
-    config.settings.python.pythonPath = get_python_path(config.root_dir)
-  end,
 	on_attach = on_attach,
 	flags = lsp_flags,
+	settings = {
+		python = {
+			analysis = {
+				autoSearchPaths = true,
+				diagnosticMode = "workspace",
+				typeCheckingMode = 'off',
+				useLibraryCodeForTypes = true,
+			}
+		}
+	},
+	before_init = function(_, config)
+	config.settings.python.pythonPath = get_python_path(config.root_dir)
+	end,
 })
 
 -- PHP Setup
