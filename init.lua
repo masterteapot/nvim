@@ -1,16 +1,21 @@
+-- Global Options
 require "user.options"
 require "user.keymaps"
 require "user.globals"
-require "user.plugins"
 require "user.autocommands"
-require "user.nvim-tree"
-require "user.treesitter"
-require "user.lsp"
-require "user.cmp"
-require "user.dap"
-require "user.telescope"
-require "user.harpoon"
-require "user.null-ls"
 require "user.colorscheme"
-require "user.comment"
 require "user.icons"
+
+-- Plugins
+require "user.plugins"
+require "user.plugins.nvim-tree"
+require "user.plugins.telescope"
+require "user.plugins.harpoon"
+require "user.plugins.comment"
+
+-- LSP type things
+require "user.lsp"
+require "user.lsp.cmp"
+require "user.lsp.dap"
+require "user.lsp.null-ls"
+-- require "user.lsp.treesitter
