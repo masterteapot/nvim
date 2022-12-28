@@ -1,3 +1,8 @@
+require("mason").setup()
+require("mason-lspconfig").setup {
+    ensure_installed = { "sumneko_lua", "cssls", "marksman", "html", "intelephense", "pyright", "jsonls", "eslint" },
+}
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = false }
