@@ -73,6 +73,10 @@ keymap("x", "L", "$", opts)
 keymap("o", "H", "^", opts)
 keymap("o", "L", "$", opts)
 
+-- Vertical navigation
+keymap("n", "<C-d>", "<C-d>zz", opts)
+keymap("n", "<C-u>", "<C-u>zz", opts)
+
 -- Quick Save
 keymap("n", "<C-s>", ":w<cr>", opts)
 keymap("v", "<C-s>", ":w<cr>", opts)

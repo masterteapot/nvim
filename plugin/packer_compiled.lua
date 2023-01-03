@@ -129,6 +129,11 @@ _G.packer_plugins = {
     path = "/home/jared/.local/share/nvim/site/pack/packer/start/fd",
     url = "https://github.com/sharkdp/fd"
   },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/home/jared/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
+  },
   harpoon = {
     loaded = true,
     path = "/home/jared/.local/share/nvim/site/pack/packer/start/harpoon",
