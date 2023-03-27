@@ -30,8 +30,10 @@ keymap("n", "<m-l>", "<C-w>l", opts)
 
 -- Tabs --
 keymap("n", "<m-t>", ":tabnew %<cr>", opts)
-keymap("n", "<S-enter>", ":tabclose<cr>", opts)
-keymap("n", "<m-\\>", ":tabonly<cr>", opts)
+keymap("n", "<m-n>", ":tabnext<cr>", opts)
+keymap("n", "<m-p>", ":tabprevious<cr>", opts)
+keymap("n", "<m-Q>", ":tabclose<cr>", opts)
+keymap("n", "<m-enter>", ":tabonly<cr>", opts)
 
 -- Increment and decrease a number --
 keymap("n", "+", "<C-a>", opts)
@@ -72,6 +74,10 @@ keymap("x", "H", "^", opts)
 keymap("x", "L", "$", opts)
 keymap("o", "H", "^", opts)
 keymap("o", "L", "$", opts)
+
+-- Vertical navigation
+keymap("n", "<C-d>", "<C-d>zz", opts)
+keymap("n", "<C-u>", "<C-u>zz", opts)
 
 -- Quick Save
 keymap("n", "<C-s>", ":w<cr>", opts)
@@ -187,7 +193,6 @@ keymap("n", "<leader>yr", "<cmd>exe 'w' | exe '!python %'<CR>", opts)
 
 -- NOTE: the fact that tab and ctrl-i are the same is stupid
 keymap("n", "Q", "<cmd>bdelete!<CR>", opts)
-keymap("n", "<F2>", "<cmd>MarkdownPreviewToggle<cr>", opts)
 keymap("n", "<F4>", "<cmd>Telescope keymaps<cr>", opts)
 keymap("n", "<F3>", "<cmd>Telescope commands<CR>", opts)
 keymap("n", "<F11>", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
