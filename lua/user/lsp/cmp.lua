@@ -117,9 +117,6 @@ require('lspconfig')['pyright'].setup {
 require('lspconfig')['intelephense'].setup {
   capabilities = capabilities
 }
-require('lspconfig')['sumneko_lua'].setup {
-  capabilities = capabilities
-}
 require('lspconfig')['eslint'].setup {
   capabilities = capabilities
 }

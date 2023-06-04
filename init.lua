@@ -21,5 +21,5 @@ else
 	require "user.lsp.cmp"
 	require "user.lsp.dap"
 	require "user.lsp.null-ls"
-	-- require "user.lsp.treesitter
+	require "user.lsp.treesitter"
 end
