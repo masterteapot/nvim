@@ -58,10 +58,6 @@ return packer.startup(function(use)
 	use "kyazdani42/nvim-tree.lua"
 	use "folke/which-key.nvim"
 	use "folke/todo-comments.nvim"
-	use {
-		"SmiteshP/nvim-navic",
-		requires = "neovim/nvim-lspconfig",
-	}
 	use "norcalli/nvim-colorizer.lua"
 
 	-- Colorschemes

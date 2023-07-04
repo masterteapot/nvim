@@ -5,7 +5,6 @@ require "user.globals"
 require "user.autocommands"
 require "user.colorscheme"
 require "user.colorizer"
-require "user.icons"
 
 -- Plugins
 require "user.plugins"
