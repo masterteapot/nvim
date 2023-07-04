@@ -14,7 +14,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   callback = function()
     vim.cmd [[
       nnoremap <silent> <buffer> <m-r> :close<CR>
-      " nnoremap <silent> <buffer> <m-r> <NOP> 
       set nobuflisted 
     ]]
   end,

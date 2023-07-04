@@ -131,7 +131,9 @@ keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>", opts)
 keymap("n", "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find sorting_strategy=ascending<cr>", opts)
 keymap("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
 keymap("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
-keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
+keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(" ..
+								"{hidden=false, no_ignore=false })" ..
+								"<cr>", opts)
 keymap(
 	"n",
 	"<leader>fg",
@@ -141,7 +143,7 @@ keymap(
 keymap(
 	"n",
 	"<leader>FG",
-	"<cmd>lua require('telescope.builtin').live_grep({prompt_title = 'find string in open buffers...'})<cr>",
+	"<cmd>lua require('telescope.builtin').live_grep({prompt_title = 'find string in all buffers...'})<cr>",
 	opts
 )
 
@@ -199,8 +201,6 @@ keymap("n", "<F11>", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 keymap("n", "<F12>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 keymap("v", "//", [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], opts)
 
--- Plugin specific keymaps
-keymap("n", "<C-M>", "<cmd>MarkdownPreviewToggle<cr>", opts)
 
 -- Nvim Tree
 keymap("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", opts)
