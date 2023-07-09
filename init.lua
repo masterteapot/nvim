@@ -8,6 +8,7 @@ require "user.colorizer"
 
 -- Plugins
 require "user.plugins"
+require "user.plugins.nvim-surround"
 require "user.plugins.nvim-tree"
 require "user.plugins.telescope"
 require "user.plugins.harpoon"

@@ -1,3 +1,8 @@
+require("nvim-surround").setup({
+	-- Configuration here, or leave empty to use defaults
+})
+
+
 --     Old text                    Command         New text
 -- --------------------------------------------------------------------------------
 --     surr*ound_words             ysiw)           (surround_words)
