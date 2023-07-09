@@ -45,13 +45,26 @@ return packer.startup(function(use)
 	use "nvim-lua/popup.nvim"
 	use "akinsho/toggleterm.nvim"
 
-	-- Lua
-	use "kylechui/nvim-surround"
-	use {
-		"iamcco/markdown-preview.nvim",
-		run = function() vim.fn["mkdp#util#install"]() end,
-		ft = "markdown",
-	}
+	-- Treesitter
+	use "nvim-treesitter/nvim-treesitter" -- Also telescope live preview
+	use({
+	  "nvim-treesitter/nvim-treesitter-textobjects",
+	  after = "nvim-treesitter",
+	  requires = "nvim-treesitter/nvim-treesitter",
+	})
+
+
+	-- Text Movements
+	use ({
+		"kylechui/nvim-surround",
+		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end
+	})
+
 
 	-- UI
 	use "kyazdani42/nvim-web-devicons"
@@ -115,10 +128,6 @@ return packer.startup(function(use)
 	use "BurntSushi/ripgrep" -- For live_grep
 	use { 'nvim-telescope/telescope-fzf-native.nvim',
 		run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-
-	-- Treesitter
-	use "nvim-treesitter/nvim-treesitter" -- Also telescope live preview
-
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
