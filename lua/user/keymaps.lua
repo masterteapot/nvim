@@ -106,13 +106,16 @@ keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
+
+-- Transparency
+keymap("n", "<leader>tt", "<cmd>TransparentToggle<cr>", term_opts)
+
 -- Better terminal navigation
 keymap("t", "<A-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<A-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<A-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<A-l>", "<C-\\><C-N><C-w>l", term_opts)
 keymap("t", "<Esc>", "<C-\\><C-n>", term_opts)
-
 
 -- Quick Sourcing
 keymap("n", "<leader>s", ":source %<cr>", opts)
@@ -147,6 +150,7 @@ keymap(
 	opts
 )
 
+
 -- Harpoon Keymaps
 keymap("n", "<leader>ha", ':lua require("harpoon.mark").add_file()<CR>', opts)
 keymap("n", "<leader>ht", ':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
@@ -170,6 +174,7 @@ keymap("n", "<leader>ld", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", opts)
+keymap("n", "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
 
 -- DAP Keymaps

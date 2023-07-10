@@ -74,13 +74,17 @@ return packer.startup(function(use)
 	use "norcalli/nvim-colorizer.lua"
 
 	-- Colorschemes
-	use "folke/tokyonight.nvim"
+	use "xiyaowong/transparent.nvim"
+	use ({
+		"folke/tokyonight.nvim",
+		config = function()
+			require("tokyonight").setup({transparent = vim.g.transparent_enabled}) end
+	})
 	use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
 	use "lunarvim/darkplus.nvim"
 	use "lunarvim/onedarker.nvim"
 	use "tanvirtin/monokai.nvim"
 	use "sainnhe/sonokai"
-
 
 	-- LSP
 	use "williamboman/mason.nvim" -- simple to use language server installer
