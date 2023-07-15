@@ -75,11 +75,6 @@ keymap("x", "L", "$", opts)
 keymap("o", "H", "^", opts)
 keymap("o", "L", "$", opts)
 
-
--- Text motions
-keymap("n", "E", "ge", opts)
-
-
 -- Vertical navigation
 keymap("n", "<C-d>", "<C-d>zz", opts)
 keymap("n", "<C-u>", "<C-u>zz", opts)
@@ -111,16 +106,13 @@ keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
-
--- Transparency
-keymap("n", "<leader>tt", "<cmd>TransparentToggle<cr>", term_opts)
-
 -- Better terminal navigation
 keymap("t", "<A-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<A-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<A-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<A-l>", "<C-\\><C-N><C-w>l", term_opts)
 keymap("t", "<Esc>", "<C-\\><C-n>", term_opts)
+
 
 -- Quick Sourcing
 keymap("n", "<leader>s", ":source %<cr>", opts)
@@ -139,9 +131,7 @@ keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>", opts)
 keymap("n", "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find sorting_strategy=ascending<cr>", opts)
 keymap("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
 keymap("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
-keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(" ..
-	"{hidden=false, no_ignore=false })" ..
-	"<cr>", opts)
+keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
 keymap(
 	"n",
 	"<leader>fg",
@@ -151,10 +141,9 @@ keymap(
 keymap(
 	"n",
 	"<leader>FG",
-	"<cmd>lua require('telescope.builtin').live_grep({prompt_title = 'find string in all buffers...'})<cr>",
+	"<cmd>lua require('telescope.builtin').live_grep({prompt_title = 'find string in open buffers...'})<cr>",
 	opts
 )
-
 
 -- Harpoon Keymaps
 keymap("n", "<leader>ha", ':lua require("harpoon.mark").add_file()<CR>', opts)
@@ -162,13 +151,23 @@ keymap("n", "<leader>ht", ':lua require("harpoon.ui").toggle_quick_menu()<CR>', 
 keymap("n", "<leader>hc", ':lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>', opts)
 keymap("n", "<leader>hn", ':lua require("harpoon.ui").nav_next()<CR>', opts)
 keymap("n", "<leader>hb", ':lua require("harpoon.ui").nav_prev()<CR>', opts)
+keymap("n", "<leader>1", ':lua require("harpoon.ui").nav_file(1)<CR>', opts)
+keymap("n", "<leader>2", ':lua require("harpoon.ui").nav_file(2)<CR>', opts)
+keymap("n", "<leader>3", ':lua require("harpoon.ui").nav_file(3)<CR>', opts)
+keymap("n", "<leader>4", ':lua require("harpoon.ui").nav_file(4)<CR>', opts)
+keymap("n", "<leader>5", ':lua require("harpoon.ui").nav_file(5)<CR>', opts)
+
+-- LSP keymaps
+keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 keymap("n", "<leader>ld", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
-keymap("n", "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", opts)
 
 
 -- DAP Keymaps
@@ -200,6 +199,8 @@ keymap("n", "<F11>", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 keymap("n", "<F12>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 keymap("v", "//", [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], opts)
 
+-- Plugin specific keymaps
+keymap("n", "<C-M>", "<cmd>MarkdownPreviewToggle<cr>", opts)
 
 -- Nvim Tree
 keymap("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", opts)

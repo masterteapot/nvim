@@ -75,11 +75,6 @@ keymap("x", "L", "$", opts)
 keymap("o", "H", "^", opts)
 keymap("o", "L", "$", opts)
 
-
--- Text motions
-keymap("n", "E", "ge", opts)
-
-
 -- Vertical navigation
 keymap("n", "<C-d>", "<C-d>zz", opts)
 keymap("n", "<C-u>", "<C-u>zz", opts)
@@ -140,8 +135,8 @@ keymap("n", "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find sorting_stra
 keymap("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
 keymap("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
 keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(" ..
-	"{hidden=false, no_ignore=false })" ..
-	"<cr>", opts)
+								"{hidden=false, no_ignore=false })" ..
+								"<cr>", opts)
 keymap(
 	"n",
 	"<leader>fg",
@@ -162,12 +157,23 @@ keymap("n", "<leader>ht", ':lua require("harpoon.ui").toggle_quick_menu()<CR>', 
 keymap("n", "<leader>hc", ':lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>', opts)
 keymap("n", "<leader>hn", ':lua require("harpoon.ui").nav_next()<CR>', opts)
 keymap("n", "<leader>hb", ':lua require("harpoon.ui").nav_prev()<CR>', opts)
+keymap("n", "<leader>1", ':lua require("harpoon.ui").nav_file(1)<CR>', opts)
+keymap("n", "<leader>2", ':lua require("harpoon.ui").nav_file(2)<CR>', opts)
+keymap("n", "<leader>3", ':lua require("harpoon.ui").nav_file(3)<CR>', opts)
+keymap("n", "<leader>4", ':lua require("harpoon.ui").nav_file(4)<CR>', opts)
+keymap("n", "<leader>5", ':lua require("harpoon.ui").nav_file(5)<CR>', opts)
+
+-- LSP keymaps
+keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 keymap("n", "<leader>ld", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
+keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", opts)
 keymap("n", "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
 
