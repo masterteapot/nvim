@@ -3,8 +3,6 @@ require "user.options"
 require "user.keymaps"
 require "user.globals"
 require "user.autocommands"
-require "user.colorscheme"
-require "user.colorizer"
 
 -- Plugins
 require "user.plugins"
@@ -20,3 +18,9 @@ require "user.lsp.cmp"
 require "user.lsp.dap"
 require "user.lsp.null-ls"
 require "user.lsp.treesitter"
+
+-- Theming
+require "user.colorscheme"
+require "user.colorizer"
+
+
