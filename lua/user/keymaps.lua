@@ -135,8 +135,8 @@ keymap("n", "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find sorting_stra
 keymap("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
 keymap("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
 keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(" ..
-								"{hidden=false, no_ignore=false })" ..
-								"<cr>", opts)
+	"{hidden=false, no_ignore=false })" ..
+	"<cr>", opts)
 keymap(
 	"n",
 	"<leader>fg",
@@ -173,7 +173,7 @@ keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 keymap("n", "<leader>ld", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", opts)
+keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 keymap("n", "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
 
