@@ -19,8 +19,6 @@ require "user.lsp.dap"
 require "user.lsp.null-ls"
 require "user.lsp.treesitter"
 
--- Theming
+-- Colors and themes
 require "user.colorscheme"
 require "user.colorizer"
-
-
