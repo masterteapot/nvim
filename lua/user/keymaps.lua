@@ -75,6 +75,11 @@ keymap("x", "L", "$", opts)
 keymap("o", "H", "^", opts)
 keymap("o", "L", "$", opts)
 
+
+-- Text motions
+keymap("n", "E", "ge", opts)
+
+
 -- Vertical navigation
 keymap("n", "<C-d>", "<C-d>zz", opts)
 keymap("n", "<C-u>", "<C-u>zz", opts)

@@ -49,6 +49,8 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+vim.cmd "set t_Co=256"
+
 -- vim.cmd "set whichwrap+=<,>,[,],h,l"
 -- vim.cmd [[set iskeyword+=-]]
 -- 
