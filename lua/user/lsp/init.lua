@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "lua_ls", "cssls", "marksman", "html", "intelephense", "pyright", "jsonls", "eslint" },
+    ensure_installed = { "lua_ls", "cssls", "marksman", "html", "intelephense", "pyright", "jsonls", "eslint", "gopls" },
 }
 
 
@@ -60,6 +60,10 @@ require("lspconfig")["eslint"].setup({
 })
 
 require("lspconfig")["cssls"].setup({
+	on_attach = on_attach,
+	flags = lsp_flags,
+})
+require("lspconfig")["gopls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
 })

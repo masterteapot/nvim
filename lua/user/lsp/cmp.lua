@@ -108,3 +108,6 @@ require('lspconfig')['intelephense'].setup {
 require('lspconfig')['eslint'].setup {
   capabilities = capabilities
 }
+require('lspconfig')['gopls'].setup {
+  capabilities = capabilities
+}
