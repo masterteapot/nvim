@@ -12,15 +12,27 @@ vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<space>lq", vim.diagnostic.setloclist, opts)
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
 	-- Enable completion triggered by <c-x><c-o>
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	local bufopts = { noremap = true, silent = false, buffer = bufnr }
+
+	-- code lens 
+    if client.resolved_capabilities.code_lens then
+        local codelens = vim.api.nvim_create_augroup(
+            'LSPCodeLens',
+            { clear = true }
+        )
+        vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave', 'CursorHold' }, {
+            group = codelens,
+            callback = function()
+                vim.lsp.codelens.refresh()
+            end,
+            buffer = bufnr,
+        })
+    end
+
 end
 
 
