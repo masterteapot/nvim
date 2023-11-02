@@ -5,6 +5,7 @@ local formatting = null_ls.builtins.formatting
 local sources = {
 	formatting.eslint,
 	formatting.black,
+	formatting.ocaml,
 }
 
 null_ls.setup({
