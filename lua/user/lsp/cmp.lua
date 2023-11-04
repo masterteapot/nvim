@@ -1,23 +1,38 @@
 require("luasnip.loaders.from_vscode").lazy_load()
 
-local has_words_before = function()
-  unpack = unpack or table.unpack
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
+local status, cmp = pcall(require, "cmp")
+if (not status) then return end
 
-local cmp = require 'cmp'
+local luasnip = require("luasnip")
+local lsp = require("lspconfig")
+
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local c = vim.lsp.protocol.make_client_capabilities()
+c.textDocument.completion.completionItem.snippetSupport = true
+c.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+        'documentation',
+        'detail',
+        'additionalTextEdits',
+    },
+}
+local capabilities = require("cmp_nvim_lsp").default_capabilities(c)
+
 
 cmp.setup({
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-    end,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end,
+    },
+    window = {
+        completion = {
+            winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+        },
+        documentation = {
+            border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+        },
+    },
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -65,7 +80,6 @@ cmp.setup.cmdline(':', {
   })
 })
 
-
 require("nvim-autopairs").setup({
 	disable_filetype = { "TelescopePrompt" , "vim" },
 	disable_in_macro = false,  -- disable when recording or executing a macro
@@ -85,47 +99,21 @@ require("nvim-autopairs").setup({
 	map_c_w = false,  -- map <c-w> to delete a pair if possible
 })
 
--- Adding autocomplete for cmp as well
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on(
   'confirm_done',
   cmp_autopairs.on_confirm_done()
 )
 
-
-local c = vim.lsp.protocol.make_client_capabilities()
-c.textDocument.completion.completionItem.snippetSupport = true
-c.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-        'documentation',
-        'detail',
-        'additionalTextEdits',
-    },
-}
-
--- Set up lspconfig.
-local capabilities = require("cmp_nvim_lsp").default_capabilities(c)
-
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require('lspconfig')['pyright'].setup {
+lsp['pyright'].setup {
   capabilities = capabilities
 }
-require('lspconfig')['intelephense'].setup {
+lsp['intelephense'].setup {
   capabilities = capabilities
 }
-require('lspconfig')['eslint'].setup {
+lsp['eslint'].setup {
   capabilities = capabilities
 }
-require('lspconfig')['gopls'].setup {
+lsp['gopls'].setup {
   capabilities = capabilities
 }
-
-local status, lsp = pcall(require, "lspconfig")
-if (not status) then return end
-
-require('lspconfig')['ocamllsp'].setup({
-    cmd = { "ocamllsp" },
-    filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
-    root_dir = lsp.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
-    capabilities = capabilities
-})

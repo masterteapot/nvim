@@ -67,8 +67,6 @@ return packer.startup(function(use)
 
 
 	-- UI
-	use "kyazdani42/nvim-web-devicons"
-	use "kyazdani42/nvim-tree.lua"
 	use "folke/which-key.nvim"
 	use "folke/todo-comments.nvim"
 	use "norcalli/nvim-colorizer.lua"

@@ -49,8 +49,9 @@ end
 vim.cmd "set t_Co=256"
 
 
--- TODO Ocaml Stuff
--- vim.g:opamshare = substitute(system('opam var share'),'\n$','','''')
+-- vim.g.opamshare = substitute(system('opam var share'),'\n$','','''')
+
+
 -- :execute "set rtp+=" . g:opamshare . "/merlin/vim"
 --
 -- :execute "helptags " . g:opamshare . "/merlin/vim/doc"

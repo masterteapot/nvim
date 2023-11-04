@@ -2,15 +2,16 @@ require("mason").setup()
 require("mason-lspconfig").setup {
     ensure_installed = { "lua_ls", "cssls", "marksman", "html", "intelephense", "pyright", "jsonls", "eslint", "gopls" },
 }
+local status, lsp = pcall(require, "lspconfig")
+if (not status) then return end
 
-
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local util = require("lspconfig.util")
+local path = util.path
 local opts = { noremap = true, silent = false }
-vim.keymap.set("n", "<space>K", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "<space>lq", vim.diagnostic.setloclist, opts)
+local lsp_flags = {
+	-- This is the default in Nvim 0.7+
+	debounce_text_changes = 150,
+}
 
 local on_attach = function(client, bufnr)
 	-- Enable completion triggered by <c-x><c-o>
@@ -36,14 +37,17 @@ local on_attach = function(client, bufnr)
 end
 
 
-local lsp_flags = {
-	-- This is the default in Nvim 0.7+
-	debounce_text_changes = 150,
-}
+
+vim.keymap.set("n", "<space>K", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<space>lq", vim.diagnostic.setloclist, opts)
+
 require("lspconfig")["intelephense"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
 })
+
 require("lspconfig")["lua_ls"].setup({
   settings = {
     Lua = {
@@ -66,6 +70,7 @@ require("lspconfig")["lua_ls"].setup({
     },
   },
 })
+
 require("lspconfig")["eslint"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
@@ -75,6 +80,7 @@ require("lspconfig")["cssls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
 })
+
 require("lspconfig")["gopls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
@@ -87,11 +93,14 @@ require'lspconfig'.tsserver.setup({
 	cmd = { "typescript-language-server", "--stdio" }
 })
 
+require('lspconfig')['ocamllsp'].setup({
+    cmd = { "ocamllsp" },
+    filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
+    root_dir = lsp.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
+})
+
 
 -- Python Setup
-local util = require("lspconfig.util")
-local path = util.path
-
 local function get_python_path(workspace)
   -- Use activated virtualenv.
   if vim.env.VIRTUAL_ENV then
@@ -126,40 +135,43 @@ require("lspconfig")["pyright"].setup({
 	end,
 })
 
--- PHP Setup
-local bin_name = "intelephense"
-local cmd = { bin_name, "--stdio" }
-
-return {
-	default_config = {
-		cmd = cmd,
-		filetypes = { "php" },
-		root_dir = function(pattern)
-			local cwd = vim.loop.cwd()
-			local root = util.root_pattern("composer.json", ".git", "wp-config.php")(pattern)
-
-			-- prefer cwd if root is a descendant
-			return util.path.is_descendant(cwd, root) and cwd or root
-		end,
-	},
-	docs = {
-		default_config = {
-			root_dir = [[root_pattern("composer.json", ".git")]],
-			init_options = [[{
-        storagePath = Optional absolute path to storage dir. Defaults to os.tmpdir().
-        globalStoragePath = Optional absolute path to a global storage dir. Defaults to os.homedir().
-        licenceKey = Optional licence key or absolute path to a text file containing the licence key.
-        clearCache = Optional flag to clear server state. State can also be cleared by deleting {storagePath}/intelephense
-        -- See https://github.com/bmewburn/intelephense-docs/blob/master/installation.md#initialisation-options
-      }]],
-			settings = [[{
-        intelephense = {
-          files = {
-            maxSize = 1000000;
-          };
-        };
-        -- See https://github.com/bmewburn/intelephense-docs
-      }]],
-		},
-	},
-}
+--
+-- -- PHP Setup
+-- local bin_name = "intelephense"
+-- local cmd = { bin_name, "--stdio" }
+--
+-- return {
+-- 	default_config = {
+-- 		cmd = cmd,
+-- 		filetypes = { "php" },
+-- 		root_dir = function(pattern)
+-- 			local cwd = vim.loop.cwd()
+-- 			local root = util.root_pattern("composer.json", ".git", "wp-config.php")(pattern)
+--
+-- 			-- prefer cwd if root is a descendant
+-- 			return util.path.is_descendant(cwd, root) and cwd or root
+-- 		end,
+-- 	},
+-- 	docs = {
+-- 		default_config = {
+-- 			root_dir = [[root_pattern("composer.json", ".git")]],
+-- 			init_options = [[{
+--         storagePath = Optional absolute path to storage dir. Defaults to os.tmpdir().
+--         globalStoragePath = Optional absolute path to a global storage dir. Defaults to os.homedir().
+--         licenceKey = Optional licence key or absolute path to a text file containing the licence key.
+--         clearCache = Optional flag to clear server state. State can also be cleared by deleting {storagePath}/intelephense
+--         -- See https://github.com/bmewburn/intelephense-docs/blob/master/installation.md#initialisation-options
+--       }]],
+-- 			settings = [[{
+--         intelephense = {
+--           files = {
+--             maxSize = 1000000;
+--           };
+--         };
+--         -- See https://github.com/bmewburn/intelephense-docs
+--       }]],
+-- 		},
+-- 	},
+-- }
+--
+--

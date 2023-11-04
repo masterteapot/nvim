@@ -201,8 +201,9 @@ keymap("n", "<F12>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 keymap("v", "//", [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], opts)
 
 
--- Nvim Tree
-keymap("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", opts)
+-- Explorer
+keymap("n", "<leader>e", ":Ex<cr>", opts)
+keymap("n", "<leader>E", ":Sex<cr>", opts)
 
 -- alt binds
 keymap("n", "<m-v>", "<cmd>vsplit<cr>", opts)
