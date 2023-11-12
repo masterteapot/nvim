@@ -35,6 +35,11 @@ local options = {
   sidescrolloff = 8,
   guifont = "monospace:h17",               -- the font used in graphical neovim applications
 }
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
+-- vim.opt.fillchars.eob = " "
+-- vim.opt.fillchars = vim.opt.fillchars + "vertleft: "
+-- vim.opt.fillchars = vim.opt.fillchars + "vertright: "
 vim.opt.fillchars = vim.opt.fillchars + 'eob: '
 vim.opt.fillchars:append {
   stl = ' ',
@@ -48,11 +53,12 @@ end
 
 vim.cmd "set t_Co=256"
 
-
--- vim.g.opamshare = substitute(system('opam var share'),'\n$','','''')
-
-
--- :execute "set rtp+=" . g:opamshare . "/merlin/vim"
---
--- :execute "helptags " . g:opamshare . "/merlin/vim/doc"
+-- vim.cmd "set whichwrap+=<,>,[,],h,l"
+-- vim.cmd [[set iskeyword+=-]]
+-- 
+-- vim.filetype.add {
+--   extension = {
+--     conf = "dosini",
+--   },
+-- }
 

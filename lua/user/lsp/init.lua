@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "lua_ls", "cssls", "marksman", "html", "intelephense", "pyright", "jsonls", "eslint", "gopls" },
+    ensure_installed = { "lua_ls", "cssls", "marksman", "html", "intelephense", "pyright", "jsonls", "eslint" },
 }
 local status, lsp = pcall(require, "lspconfig")
 if (not status) then return end
@@ -48,6 +48,7 @@ require("lspconfig")["intelephense"].setup({
 	flags = lsp_flags,
 })
 
+-- Lua
 require("lspconfig")["lua_ls"].setup({
   settings = {
     Lua = {
@@ -99,6 +100,9 @@ require('lspconfig')['ocamllsp'].setup({
     root_dir = lsp.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
 })
 
+-- Python Setup
+local util = require("lspconfig.util")
+local path = util.path
 
 -- Python Setup
 local function get_python_path(workspace)
