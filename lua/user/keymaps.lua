@@ -21,6 +21,9 @@ keymap("n", "<C-Space>", "<cmd>WhichKey \\<leader><cr>", opts)
 --   term_mode = "t",
 --   command_mode = "c",
 
+-- Netrw Explorer
+keymap("n", "<leader>w", ":bd<cr>", opts)
+
 -- Normal --
 -- Better window navigation
 keymap("n", "<m-h>", "<C-w>h", opts)
