@@ -48,14 +48,14 @@ return packer.startup(function(use)
 	-- Treesitter
 	use "nvim-treesitter/nvim-treesitter" -- Also telescope live preview
 	use({
-	  "nvim-treesitter/nvim-treesitter-textobjects",
-	  after = "nvim-treesitter",
-	  requires = "nvim-treesitter/nvim-treesitter",
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		after = "nvim-treesitter",
+		requires = "nvim-treesitter/nvim-treesitter",
 	})
 
 
 	-- Text Movements
-	use ({
+	use({
 		"kylechui/nvim-surround",
 		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
 		config = function()
@@ -73,10 +73,11 @@ return packer.startup(function(use)
 
 	-- Colorschemes
 	use "xiyaowong/transparent.nvim"
-	use ({
+	use({
 		"folke/tokyonight.nvim",
 		config = function()
-			require("tokyonight").setup({transparent = vim.g.transparent_enabled}) end
+			require("tokyonight").setup({ transparent = vim.g.transparent_enabled })
+		end
 	})
 	use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
 	use "lunarvim/darkplus.nvim"
@@ -85,11 +86,11 @@ return packer.startup(function(use)
 	use "sainnhe/sonokai"
 
 	-- LSP
-	use "williamboman/mason.nvim" -- simple to use language server installer
+	use "williamboman/mason.nvim"        -- simple to use language server installer
 	use "williamboman/mason-lspconfig.nvim" -- simple to use language server installer
-	use "neovim/nvim-lspconfig" -- enable LSP
+	use "neovim/nvim-lspconfig"          -- enable LSP
 	use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
-	use "windwp/nvim-ts-autotag" -- for HTML and PHP tag functionality
+	use "windwp/nvim-ts-autotag"         -- for HTML and PHP tag functionality
 
 
 	-- cmp plugins
@@ -104,16 +105,16 @@ return packer.startup(function(use)
 
 
 	-- Debugging
-	use "mfussenegger/nvim-dap"
-	use "rcarriga/nvim-dap-ui"
-	use "theHamsta/nvim-dap-virtual-text"
-	use 'mfussenegger/nvim-dap-python'
-	use 'nvim-telescope/telescope-dap.nvim'
+	-- use "mfussenegger/nvim-dap"
+	-- use "rcarriga/nvim-dap-ui"
+	-- use "theHamsta/nvim-dap-virtual-text"
+	-- use 'mfussenegger/nvim-dap-python'
+	-- use 'nvim-telescope/telescope-dap.nvim'
 
 
 	-- snippets
-	use "L3MON4D3/LuaSnip" --snippet engine
-	use "saadparwaiz1/cmp_luasnip" -- snippet completions
+	use "L3MON4D3/LuaSnip"          --snippet engine
+	use "saadparwaiz1/cmp_luasnip"  -- snippet completions
 	use "rafamadriz/friendly-snippets" -- Preset completions
 
 	-- Comments
@@ -125,11 +126,16 @@ return packer.startup(function(use)
 
 	-- Telescope
 	use "nvim-telescope/telescope.nvim"
-	use "ThePrimeagen/harpoon"
-	use "sharkdp/fd" -- finder for Telescope
-	use "BurntSushi/ripgrep" -- For live_grep
+	use {
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		requires = { { "nvim-lua/plenary.nvim" } } }
+	use "masterteapot/harpoon-jdsl" -- make harpoon better
+	use "sharkdp/fd"             -- finder for Telescope
+	use "BurntSushi/ripgrep"     -- For live_grep
 	use { 'nvim-telescope/telescope-fzf-native.nvim',
-		run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+		run =
+		'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
