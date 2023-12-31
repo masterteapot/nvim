@@ -130,7 +130,6 @@ keymap("n", "<leader>s", ":source %<cr>", opts)
 keymap("n", "<leader>S", ":luafile %<cr>", opts)
 
 -- Telescope Keymaps
-keymap("n", "<leader>fm", "<cmd>lua require('telescope').extensions.harpoon.marks({initial_mode='normal'})<cr>", opts)
 keymap(
 	"n",
 	"<leader>fb",
@@ -166,23 +165,6 @@ keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 keymap("n", "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-
--- Harpoon Keymaps
-keymap("n", "<leader>ha", ':lua require("harpoon.mark").add_file()<CR>', opts)
-keymap("n", "<leader>ht", ':lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
-keymap("n", "<leader>hc", ':lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>', opts)
-keymap("n", "<leader>hn", ':lua require("harpoon.ui").nav_next()<CR>', opts)
-keymap("n", "<leader>hb", ':lua require("harpoon.ui").nav_prev()<CR>', opts)
-keymap("n", "<leader>1", ':lua require("harpoon.ui").nav_file(1)<CR>', opts)
-keymap("n", "<leader>2", ':lua require("harpoon.ui").nav_file(2)<CR>', opts)
-keymap("n", "<leader>3", ':lua require("harpoon.ui").nav_file(3)<CR>', opts)
-keymap("n", "<leader>4", ':lua require("harpoon.ui").nav_file(4)<CR>', opts)
-keymap("n", "<leader>5", ':lua require("harpoon.ui").nav_file(5)<CR>', opts)
-keymap("n", "<leader>6", ':lua require("harpoon.ui").nav_file(6)<CR>', opts)
-keymap("n", "<leader>7", ':lua require("harpoon.ui").nav_file(7)<CR>', opts)
-keymap("n", "<leader>8", ':lua require("harpoon.ui").nav_file(8)<CR>', opts)
-keymap("n", "<leader>9", ':lua require("harpoon.ui").nav_file(9)<CR>', opts)
-
 
 -- DAP Keymaps
 keymap("n", "<leader>dr", "<cmd>lua require('dapui').open()<CR>", opts)
