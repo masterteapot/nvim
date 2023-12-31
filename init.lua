@@ -14,7 +14,8 @@ require "user.plugins.comment"
 -- LSP type things
 require "user.lsp"
 require "user.lsp.cmp"
-require "user.lsp.dap"
+
+-- require "user.lsp.dap"
 require "user.lsp.null-ls"
 require "user.lsp.treesitter"
 

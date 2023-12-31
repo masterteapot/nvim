@@ -130,7 +130,7 @@ return packer.startup(function(use)
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",
 		requires = { { "nvim-lua/plenary.nvim" } } }
-	use "masterteapot/harpoon-jdsl" -- make harpoon better
+	-- use "masterteapot/harpoon-jdsl" -- make harpoon better
 	use "sharkdp/fd"             -- finder for Telescope
 	use "BurntSushi/ripgrep"     -- For live_grep
 	use { 'nvim-telescope/telescope-fzf-native.nvim',
