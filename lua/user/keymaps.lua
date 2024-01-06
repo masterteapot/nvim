@@ -136,13 +136,19 @@ keymap(
 	"<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{initial_mode='normal'})<cr>",
 	opts
 )
-keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').git_branches<cr>", opts)
+-- keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').git_branches<cr>", opts)
 keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>", opts)
 keymap("n", "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find sorting_strategy=ascending<cr>", opts)
 keymap("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
 keymap("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
 keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(" ..
 	"{hidden=false, no_ignore=false })" ..
+	"<cr>", opts)
+keymap("n", "<leader>fF", "<cmd>lua require'telescope.builtin'.find_files(" ..
+	"{hidden=true, no_ignore=false })" ..
+	"<cr>", opts)
+keymap("n", "<leader>FF", "<cmd>lua require'telescope.builtin'.find_files(" ..
+	"{hidden=true, no_ignore=true })" ..
 	"<cr>", opts)
 keymap(
 	"n",
