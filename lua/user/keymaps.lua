@@ -172,8 +172,13 @@ keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 keymap("n", "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
--- Language specifc keymaps
+-- Language specifc keymaps: Ocaml
 keymap("v", "<leader>oi", "<cmd>:s/\\(.\\)$/\\1 in/<CR><ESC>", opts)
+keymap("v", "<leader>o;", "<cmd>:s/\\(.\\)$/\\1;/<CR><ESC>", opts)
+
+
+-- Clear search highlight
+keymap("n", "<leader>/", "<cmd>noh<CR>", opts)
 
 
 -- DAP Keymaps
