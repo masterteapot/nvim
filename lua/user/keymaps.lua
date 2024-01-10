@@ -166,48 +166,26 @@ keymap(
 -- LSP Keymaps
 keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-keymap("n", "<leader>ld", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+keymap("n", "gD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+keymap("n", "GD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+keymap("n", "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
-keymap("n", "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
 -- Language specifc keymaps: Ocaml
 keymap("v", "<leader>oi", "<cmd>:s/\\(.\\)$/\\1 in/<CR><ESC>", opts)
 keymap("v", "<leader>o;", "<cmd>:s/\\(.\\)$/\\1;/<CR><ESC>", opts)
 
-
 -- Clear search highlight
 keymap("n", "<leader>/", "<cmd>noh<CR>", opts)
-
-
--- DAP Keymaps
-keymap("n", "<leader>dr", "<cmd>lua require('dapui').open()<CR>", opts)
-keymap("n", "<leader>dc", "<cmd>lua require('dapui').close()<CR>", opts)
-keymap("n", "<leader>db", "<cmd>lua require('dapui').toggle()<CR>", opts)
-
-keymap("n", "<F5>", "<cmd>lua require('dap').continue()<CR>", opts)
-keymap("n", "<leader>df", "<cmd>lua require('dap').continue()<CR>", opts)
-keymap("n", "<leader>do", "<cmd>lua require('dap').step_over()<CR>", opts)
-keymap("n", "<leader>di", "<cmd>lua require('dap').step_into()<CR>", opts)
-keymap("n", "<leader>dx", "<cmd>lua require('dap').step_out()<CR>", opts)
-keymap("n", "<leader>dt", "<cmd>lua require('dap').toggle_breakpoint()<CR>", opts)
-keymap("n", "<leader>dm", "<cmd>lua require('dap-python').test_method()<CR>", opts)
--- keymap("n", "<leader>dr", "<cmd>lua require('dap').repl.open()<CR>", opts)
-keymap("n", "<leader>dp", "<cmd>lua require('dap').repl.run_last()<CR>", opts)
-keymap("v", "<leader>ds <Esc>", "<cmd>lua require('dap-python').debug_selection()<CR>", opts)
-keymap("x", "<leader>ds <Esc>", "<cmd>lua require('dap-python').debug_selection()<CR>", opts)
-
 
 -- Python keymaps
 keymap("n", "<leader>yr", "<cmd>exe 'w' | exe '!python %'<CR>", opts)
 
 -- NOTE: the fact that tab and ctrl-i are the same is stupid
 keymap("n", "Q", "<cmd>bdelete!<CR>", opts)
-keymap("n", "<F4>", "<cmd>Telescope keymaps<cr>", opts)
-keymap("n", "<F3>", "<cmd>Telescope commands<CR>", opts)
-keymap("n", "<F11>", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-keymap("n", "<F12>", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 keymap("v", "//", [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], opts)
 
 
