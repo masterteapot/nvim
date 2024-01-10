@@ -172,6 +172,10 @@ keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 keymap("n", "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
+-- Language specifc keymaps
+keymap("v", "<leader>oi", "<cmd>:s/\\(.\\)$/\\1 in/<CR><ESC>", opts)
+
+
 -- DAP Keymaps
 keymap("n", "<leader>dr", "<cmd>lua require('dapui').open()<CR>", opts)
 keymap("n", "<leader>dc", "<cmd>lua require('dapui').close()<CR>", opts)
