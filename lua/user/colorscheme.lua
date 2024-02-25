@@ -2,11 +2,11 @@
 -- local colorscheme = "aurora"
 -- local colorscheme = "lunar"
 -- local colorscheme = "system76"
--- -- local colorscheme = "slate"
+-- local colorscheme = "slate"
 -- local colorscheme = "desert"
 -- local colorscheme = "ferrum"
 -- local colorscheme = "evenings"
--- local colorscheme = "habamax"
+local colorscheme = "habamax"
 -- local colorscheme = "koehler"
 -- local colorscheme = "monokai"
 -- local colorscheme = "onenord"
@@ -21,7 +21,7 @@
 -- local colorscheme = "codemonkey"
 -- local colorscheme = "tokyonight"
 -- local colorscheme = "tokyonight-moon"
-local colorscheme = "tokyonight-night"
+-- local colorscheme = "tokyonight-night"
 -- local colorscheme = "tokyonight-storm"
 -- local colorscheme = "tokyonight"
 
@@ -39,7 +39,7 @@ require("transparent").setup({
     'SignColumn', 'CursorLineNr', 'EndOfBuffer',
   },
   extra_groups =   {
-    "NvimTreeNormal", -- NvimTree
+    -- "NvimTreeNormal", -- NvimTree
 	-- "DiagnosticError", -- Diagnostics
 	-- "DiagnosticWarn",
 	-- "DiagnosticInfo",
