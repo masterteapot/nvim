@@ -1,11 +1,8 @@
 require("luasnip.loaders.from_vscode").lazy_load()
-
 local status, cmp = pcall(require, "cmp")
 if (not status) then return end
-
 local luasnip = require("luasnip")
 local lsp = require("lspconfig")
-
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local c = vim.lsp.protocol.make_client_capabilities()
 c.textDocument.completion.completionItem.snippetSupport = true
@@ -27,9 +24,13 @@ cmp.setup({
     },
     window = {
         completion =
-			cmp.config.window.bordered(),
+			cmp.config.window.bordered({
+            winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+		}),
         documentation =
-			cmp.config.window.bordered(),
+			cmp.config.window.bordered({
+            winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+		})
     },
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -68,7 +69,6 @@ cmp.setup.cmdline('/', {
     { name = 'buffer' }
   }
 })
-
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
@@ -116,3 +116,4 @@ lsp['eslint'].setup {
 lsp['gopls'].setup {
   capabilities = capabilities
 }
+
