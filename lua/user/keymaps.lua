@@ -173,6 +173,9 @@ keymap("n", "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 keymap("n", "<leader>lc", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
+==== BASE ====
+keymap("n", "<leader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+==== BASE ====
 
 -- Language specifc keymaps: Ocaml
 keymap("v", "<leader>oi", "<cmd>:s/\\(.\\)$/\\1 in/<CR><ESC>", opts)
