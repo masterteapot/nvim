@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup {
-	ensure_installed = { "lua_ls", "cssls", "marksman", "gopls", "html", "intelephense", "pyright", "jsonls", "eslint" },
+	ensure_installed = { "lua_ls", "cssls", "marksman", "gopls", "html", "intelephense", "pyright", "jsonls" },
 }
 local status, lsp = pcall(require, "lspconfig")
 if (not status) then return end
@@ -52,6 +52,36 @@ vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<space>lq", vim.diagnostic.setloclist, opts)
 
+
+require('lspconfig')['ocamllsp'].setup({
+	cmd = { "dune", "exec", "ocamllsp" },
+	manual_install = true,
+	filetypes = { "ocaml", "reason", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
+	root_dir = lsp.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
+	settings = {
+		codelens = { enable = true },
+		inlayHints = { enable = true },
+		syntaxDocumentation = { enable = true },
+	},
+	get_language_id = function(_, lang)
+		print("LANG:", lang)
+		local map = {
+			["ocaml.mlx"] = "ocaml",
+		}
+		return map[lang] or lang
+	end,
+	server_capabilities = { semanticTokensProvider = false, },
+	-- on_attach = on_attach,
+	capabilities = capabilities
+})
+
+
+
+
+
+
+
+
 require("lspconfig")["intelephense"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
@@ -90,22 +120,6 @@ require("lspconfig")["eslint"].setup({
 require("lspconfig")["cssls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
-})
-
-require 'lspconfig'.tsserver.setup({
-	on_attach = on_attach,
-	flags = lsp_flags,
-	filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
-	cmd = { "typescript-language-server", "--stdio" }
-})
-
-
-require('lspconfig')['ocamllsp'].setup({
-	cmd = { "ocamllsp" },
-	filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
-	root_dir = lsp.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
-	on_attach = on_attach,
-	capabilities = capabilities
 })
 
 require("lspconfig")["gopls"].setup({

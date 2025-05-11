@@ -88,8 +88,8 @@ return packer.startup(function(use)
 	-- LSP
 	use "williamboman/mason.nvim"        -- simple to use language server installer
 	use "williamboman/mason-lspconfig.nvim" -- simple to use language server installer
-	use "neovim/nvim-lspconfig"          -- enable LSP
-	use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+	use "neovim/nvim-lspconfig"          -- eocamlformatnable LSP
+	use "nvimtools/none-ls.nvim" -- for formatters and linters
 	use "windwp/nvim-ts-autotag"         -- for HTML and PHP tag functionality
 
 
@@ -102,14 +102,6 @@ return packer.startup(function(use)
 	use "hrsh7th/cmp-nvim-lua"
 	use "hrsh7th/nvim-cmp"
 	use "windwp/nvim-autopairs" -- Autopairs, integrates with cmp / config with cmp file
-
-
-	-- Debugging
-	-- use "mfussenegger/nvim-dap"
-	-- use "rcarriga/nvim-dap-ui"
-	-- use "theHamsta/nvim-dap-virtual-text"
-	-- use 'mfussenegger/nvim-dap-python'
-	-- use 'nvim-telescope/telescope-dap.nvim'
 
 
 	-- snippets
@@ -136,8 +128,6 @@ return packer.startup(function(use)
 		run =
 		'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 
-	-- Automatically set up your configuration after cloning packer.nvim
-	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end
