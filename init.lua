@@ -9,9 +9,6 @@ vim.o.relativenumber = true
 vim.o.mouse = 'a'
 vim.o.showmode = false
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 -- vim.schedule(function()
 --   vim.o.clipboard = 'unnamedplus'
@@ -787,6 +784,12 @@ require('lazy').setup({
 })
 
 local keymap = vim.api.nvim_set_keymap
+local funmap = function(mode, l, r, opts)
+  opts = opts or {}
+  opts.silent = true
+  vim.keymap.set(mode, l, r, opts)
+end
+
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
 
@@ -869,16 +872,22 @@ keymap('t', '<A-l>', '<C-\\><C-N><C-w>l', term_opts)
 keymap('t', '<Esc>', '<C-\\><C-n>', term_opts)
 
 -- LSP Keymaps
-keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-keymap('n', 'gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-keymap('n', 'GD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-keymap('n', '<leader>ld', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-keymap('n', '<leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-keymap('n', '<leader>lc', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-keymap('n', '<leader>lf', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
-keymap('n', '<leader>ld', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+funmap('n', 'gi', vim.lsp.buf.implementation, opts)
+funmap('n', 'gr', vim.lsp.buf.references, opts)
+funmap('n', 'gd', vim.lsp.buf.definition, opts)
+funmap('n', 'gD', vim.lsp.buf.type_definition, opts)
+funmap('n', 'GD', vim.lsp.buf.type_definition, opts)
+funmap('n', '<leader>ld', function()
+  vim.diagnostic.open_float { border = 'rounded' }
+end, opts)
+funmap('n', '<leader>lr', vim.lsp.buf.rename, opts)
+funmap('n', '<leader>lc', vim.lsp.buf.code_action, opts)
+funmap('n', '<leader>lf', vim.lsp.buf.format, opts)
+funmap('n', '<leader>ld', vim.diagnostic.open_float, opts)
+funmap('n', 'K', function()
+  vim.lsp.buf.hover { border = 'single' }
+end, opts)
+funmap('n', '<C-k>', vim.lsp.buf.signature_help, opts)
 
 -- Language specifc keymaps: Ocaml
 keymap('v', '<leader>oi', '<cmd>:s/\\(.\\)$/\\1 in/<CR><ESC>', opts)
@@ -936,6 +945,3 @@ end)
 vim.keymap.set('n', '<leader>9', function()
   harpoon:list():select(9)
 end)
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
