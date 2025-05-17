@@ -188,7 +188,7 @@ require('lazy').setup({
 
     -- Document existing key chains
     spec = {
-      { '<leader>s', group = '[S]earch' },
+      { '<leader>f', group = '[F]ind' },
       { '<leader>t', group = '[T]oggle' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
     },
@@ -235,15 +235,15 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-      vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-      vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
+      vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
+      vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
+      vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = '[F]ind [S]elect Telescope' })
+      vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = '[F]ind current [W]ord' })
+      vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep' })
+      vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
+      vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
+      vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[F]ind Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
@@ -257,17 +257,17 @@ require('lazy').setup({
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
-      vim.keymap.set('n', '<leader>s/', function()
+      vim.keymap.set('n', '<leader>f/', function()
         builtin.live_grep {
           grep_open_files = true,
           prompt_title = 'Live Grep in Open Files',
         }
-      end, { desc = '[S]earch [/] in Open Files' })
+      end, { desc = '[F]ind [/] in Open Files' })
 
       -- Shortcut for searching your Neovim configuration files
-      vim.keymap.set('n', '<leader>sn', function()
+      vim.keymap.set('n', '<leader>fn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
-      end, { desc = '[S]earch [N]eovim files' })
+      end, { desc = '[F]ind [N]eovim files' })
     end,
   },
 
@@ -291,10 +291,8 @@ require('lazy').setup({
       { 'mason-org/mason.nvim', opts = {} },
       'mason-org/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-
       -- Useful status updates for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
-
       -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
     },
@@ -302,58 +300,18 @@ require('lazy').setup({
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          -- NOTE: Remember that Lua is a real programming language, and as such it is possible
-          -- to define small helper and utility functions so you don't have to repeat yourself.
-          --
-          -- In this case, we create a function that lets us more easily define mappings specific
-          -- for LSP related items. It sets the mode, buffer and description for us each time.
           local map = function(keys, func, desc, mode)
             mode = mode or 'n'
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          -- Rename the variable under your cursor.
-          --  Most Language Servers support renaming across files, etc.
-          map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
-
-          -- Execute a code action, usually your cursor needs to be on top of an error
-          -- or a suggestion from your LSP for this to activate.
-          map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
-
-          -- Find references for the word under your cursor.
-          map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-
-          -- Jump to the implementation of the word under your cursor.
-          --  Useful when your language has ways of declaring types without an actual implementation.
-          map('gri', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-
-          -- Jump to the definition of the word under your cursor.
-          --  This is where a variable was first declared, or where a function is defined, etc.
-          --  To jump back, press <C-t>.
-          map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-
-          -- WARN: This is not Goto Definition, this is Goto Declaration.
-          --  For example, in C this would take you to the header.
-          map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-
-          -- Fuzzy find all the symbols in your current document.
-          --  Symbols are things like variables, functions, types, etc.
-          map('gO', require('telescope.builtin').lsp_document_symbols, 'Open Document Symbols')
-
-          -- Fuzzy find all the symbols in your current workspace.
-          --  Similar to document symbols, except searches over your entire project.
-          map('gW', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Open Workspace Symbols')
-
-          -- Jump to the type of the word under your cursor.
-          --  Useful when you're not sure what type a variable is and you want to see
-          --  the definition of its *type*, not where it was *defined*.
-          map('grt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
-
-          -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
-          ---@param client vim.lsp.Client
-          ---@param method vim.lsp.protocol.Method
-          ---@param bufnr? integer some lsp support methods only in specific files
-          ---@return boolean
+          map('<leader>flr', require('telescope.builtin').lsp_references, '[F]ind [L]sp [R]eferences')
+          map('<leader>fli', require('telescope.builtin').lsp_implementations, '[F]ind [L]sp [I]mplementation')
+          map('<leader>fld', require('telescope.builtin').lsp_definitions, '[F]ind [L]sp [D]efinition')
+          map('<leader>flD', vim.lsp.buf.declaration, '[F]ind [L]sp [D]eclaration')
+          map('<leader>fds', require('telescope.builtin').lsp_document_symbols, '[F]ind [D]ocument [S]ymbols')
+          map('<leader>fws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[F]ind [W]orkspace [S]ymbols')
+          map('<leader>ftd', require('telescope.builtin').lsp_type_definitions, '[F]ind [T]ype [D]efinition')
           local function client_supports_method(client, method, bufnr)
             if vim.fn.has 'nvim-0.11' == 1 then
               return client:supports_method(method, bufnr)
@@ -361,12 +319,9 @@ require('lazy').setup({
               return client.supports_method(method, { bufnr = bufnr })
             end
           end
-
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
           --    See `:help CursorHold` for information about when this is executed
-          --
-          -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
@@ -390,11 +345,7 @@ require('lazy').setup({
               end,
             })
           end
-
-          -- The following code creates a keymap to toggle inlay hints in your
-          -- code, if the language server you are using supports them
-          --
-          -- This may be unwanted, since they displace some of your code
+          -- The following code creates a keymap to toggle inlay hints in your code
           if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
             map('<leader>th', function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
@@ -402,9 +353,6 @@ require('lazy').setup({
           end
         end,
       })
-
-      -- Diagnostic Config
-      -- See :help vim.diagnostic.Opts
       vim.diagnostic.config {
         severity_sort = true,
         float = { border = 'rounded', source = 'if_many' },
@@ -496,12 +444,12 @@ require('lazy').setup({
     cmd = { 'ConformInfo' },
     keys = {
       {
-        '<leader>f',
+        '<leader>lf',
         function()
           require('conform').format { async = true, lsp_format = 'fallback' }
         end,
         mode = '',
-        desc = '[F]ormat buffer',
+        desc = '[L]SP [F]ormat buffer',
       },
     },
     opts = {
@@ -635,7 +583,7 @@ require('lazy').setup({
         use_icons = vim.g.have_nerd_font,
         content = {
           active = function()
-            local mode, filename, fileinfo = MiniStatusline.section_mode({}), MiniStatusline.section_filename({}), MiniStatusline.section_fileinfo({})
+            local mode, filename, fileinfo = MiniStatusline.section_mode {}, MiniStatusline.section_filename {}, MiniStatusline.section_fileinfo {}
             return MiniStatusline.combine_groups {
               { hl = 'MiniStatuslineModeNormal', strings = { mode } },
               { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
@@ -839,6 +787,11 @@ end
 
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
+local add_opts = function(opts)
+  opts.noremap = true
+  opts.silent = true
+  return opts
+end
 
 -- Oil
 keymap('n', '<leader>e', '<cmd>Oil<cr>', opts)
@@ -850,25 +803,28 @@ keymap('n', '<C-Space>', '<cmd>WhichKey \\<leader><cr>', opts)
 keymap('n', '+', '<C-a>', opts)
 keymap('n', '-', '<C-x>', opts)
 
+-- remove highlights on escape
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
 -- Copy and paste --
-keymap('n', '<leader>y', '"+y', opts)
-keymap('n', '<leader>Y', '"+yg_', opts)
-keymap('v', '<leader>y', '"+y', opts)
-keymap('v', '<leader>Y', '"+yg_', opts)
-keymap('x', '<leader>y', '"+y', opts)
-keymap('x', '<leader>Y', '"+yg_', opts)
-keymap('o', '<leader>y', '"+y', opts)
-keymap('o', '<leader>Y', '"+yg_', opts)
+keymap('n', '<leader>y', '"+y', add_opts { desc = '[Y]ank into global register' })
+keymap('n', '<leader>Y', '"+yg_', add_opts { desc = '[Y]ank into global register' })
+keymap('v', '<leader>y', '"+y', add_opts { desc = '[Y]ank into global register' })
+keymap('v', '<leader>Y', '"+yg_', add_opts { desc = '[Y]ank into global register' })
+keymap('x', '<leader>y', '"+y', add_opts { desc = '[Y]ank into global register' })
+keymap('x', '<leader>Y', '"+yg_', add_opts { desc = '[Y]ank into global register' })
+keymap('o', '<leader>y', '"+y', add_opts { desc = '[Y]ank into global register' })
+keymap('o', '<leader>Y', '"+yg_', add_opts { desc = '[Y]ank into global register' })
 
 -- Paste from clipboard
-keymap('n', '<leader>p', '"+p', opts)
-keymap('n', '<leader>P', '"+P', opts)
-keymap('v', '<leader>p', '"+p', opts)
-keymap('v', '<leader>P', '"+P', opts)
-keymap('x', '<leader>p', '"+p', opts)
-keymap('x', '<leader>P', '"+P', opts)
-keymap('o', '<leader>p', '"+p', opts)
-keymap('o', '<leader>P', '"+P', opts)
+keymap('n', '<leader>p', '"+p', add_opts { desc = '[P]aste into global register' })
+keymap('n', '<leader>P', '"+P', add_opts { desc = '[P]aste into global register' })
+keymap('v', '<leader>p', '"+p', add_opts { desc = '[P]aste into global register' })
+keymap('v', '<leader>P', '"+P', add_opts { desc = '[P]aste into global register' })
+keymap('x', '<leader>p', '"+p', add_opts { desc = '[P]aste into global register' })
+keymap('x', '<leader>P', '"+P', add_opts { desc = '[P]aste into global register' })
+keymap('o', '<leader>p', '"+p', add_opts { desc = '[P]aste into global register' })
+keymap('o', '<leader>P', '"+P', add_opts { desc = '[P]aste into global register' })
 
 -- Resize with arrows
 keymap('n', '<C-Up>', ':resize -2<CR>', opts)
@@ -919,101 +875,82 @@ keymap('t', '<A-l>', '<C-\\><C-N><C-w>l', term_opts)
 keymap('t', '<Esc>', '<C-\\><C-n>', term_opts)
 
 -- LSP Keymaps
-funmap('n', 'gi', vim.lsp.buf.implementation, opts)
-funmap('n', 'gr', vim.lsp.buf.references, opts)
-funmap('n', 'gd', vim.lsp.buf.definition, opts)
-funmap('n', 'gD', vim.lsp.buf.type_definition, opts)
-funmap('n', 'GD', vim.lsp.buf.type_definition, opts)
+funmap('n', '<leader>lbi', vim.lsp.buf.implementation, add_opts { desc = '[L]sp [B]uffer [I]mplementation' })
+funmap('n', '<leader>lbr', vim.lsp.buf.references, add_opts { desc = '[L]sp [B]uffer [R]eferences' })
+funmap('n', '<leader>lbd', vim.lsp.buf.definition, add_opts { desc = '[L]sp [B]uffer [D]efinition' })
+funmap('n', '<leader>lbt', vim.lsp.buf.type_definition, add_opts { desc = '[L]sp [B]uffer [T]ype definition' })
+funmap('n', '<leader>lbs', function()
+  vim.lsp.buf.signature_help { border = 'rounded' }
+end, add_opts { desc = '[L]sp [B]uffer [S]ignature help' })
 funmap('n', '<leader>ld', function()
   vim.diagnostic.open_float { border = 'rounded' }
-end, opts)
-funmap('n', '<leader>lr', vim.lsp.buf.rename, opts)
-funmap('n', '<leader>lc', vim.lsp.buf.code_action, opts)
-funmap('n', '<leader>lf', vim.lsp.buf.format, opts)
-funmap('n', '<leader>ld', vim.diagnostic.open_float, opts)
+end, add_opts { desc = '[L]sp [D]iagnostics' })
+funmap('n', '<leader>lr', vim.lsp.buf.rename, add_opts { desc = '[L]sp [R]ename' })
+funmap('n', '<leader>lc', vim.lsp.buf.code_action, add_opts { desc = '[L]sp [C]ode action' })
+funmap('n', '<leader>lf', vim.lsp.buf.format, add_opts { desc = '[L]sp [F]ormat' })
 funmap('n', 'K', function()
   vim.lsp.buf.hover { border = 'single' }
-end, opts)
-funmap('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+end, add_opts { desc = '[K] for hover' })
+-- Diagnostic keymaps
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Language specifc keymaps: Ocaml
-keymap('v', '<leader>oi', '<cmd>:s/\\(.\\)$/\\1 in/<CR><ESC>', opts)
-keymap('v', '<leader>o;', '<cmd>:s/\\(.\\)$/\\1;/<CR><ESC>', opts)
+keymap('', '<leader>oi', '<cmd>:s/\\(.\\)$/\\1 in/<CR><ESC>', add_opts { desc = '[O]caml [I]nsert in' })
+keymap('v', '<leader>o;', '<cmd>:s/\\(.\\)$/\\1;/<CR><ESC>', add_opts { desc = '[O]caml [;]nsert ;' })
 
--- NOTE: the fact that tab and ctrl-i are the same is stupid
 keymap('n', 'Q', '<cmd>bdelete!<CR>', opts)
 keymap('v', '//', [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], opts)
 
 -- alt binds
 keymap('n', '<m-v>', '<cmd>vsplit<cr>', opts)
 
--- Clear search highlight
-keymap('n', '<leader>/', '<cmd>noh<CR>', opts)
-
 -- Harpoon Keymaps
 require('telescope').load_extension 'harpoon'
 local harpoon = require 'harpoon'
-vim.keymap.set('n', '<leader>ha', function()
+funmap('n', '<leader>ha', function()
   harpoon:list():add()
-end)
-vim.keymap.set('n', '<leader>ht', function()
+end, add_opts { desc = '[H]arpoon [A]dd' })
+funmap('n', '<leader>ht', function()
   harpoon.ui:toggle_quick_menu(harpoon:list())
-end)
-vim.keymap.set('n', '<leader>hn', function()
+end, add_opts { desc = '[H]arpoon [T]oggle' })
+funmap('n', '<leader>hn', function()
   harpoon:list():next()
-end)
-vim.keymap.set('n', '<leader>hb', function()
+end, add_opts { desc = '[H]arpoon [N]ext' })
+funmap('n', '<leader>hb', function()
   harpoon:list():prev()
-end)
-vim.keymap.set('n', '<leader>1', function()
+end, add_opts { desc = '[H]arpoon [P]revious' })
+funmap('n', '<leader>1', function()
   harpoon:list():select(1)
-end)
-vim.keymap.set('n', '<leader>2', function()
+end, add_opts { desc = '[H]arpoon select [1]' })
+funmap('n', '<leader>2', function()
   harpoon:list():select(2)
-end)
-vim.keymap.set('n', '<leader>3', function()
+end, add_opts { desc = '[H]arpoon select [2]' })
+funmap('n', '<leader>3', function()
   harpoon:list():select(3)
-end)
-vim.keymap.set('n', '<leader>4', function()
+end, add_opts { desc = '[H]arpoon select [3]' })
+funmap('n', '<leader>4', function()
   harpoon:list():select(4)
-end)
-vim.keymap.set('n', '<leader>5', function()
+end, add_opts { desc = '[H]arpoon select [4]' })
+funmap('n', '<leader>5', function()
   harpoon:list():select(5)
-end)
-vim.keymap.set('n', '<leader>6', function()
+end, add_opts { desc = '[H]arpoon select [5]' })
+funmap('n', '<leader>6', function()
   harpoon:list():select(6)
-end)
-vim.keymap.set('n', '<leader>7', function()
+end, add_opts { desc = '[H]arpoon select [6]' })
+funmap('n', '<leader>7', function()
   harpoon:list():select(7)
-end)
-vim.keymap.set('n', '<leader>8', function()
+end, add_opts { desc = '[H]arpoon select [7]' })
+funmap('n', '<leader>8', function()
   harpoon:list():select(8)
-end)
-vim.keymap.set('n', '<leader>9', function()
+end, add_opts { desc = '[H]arpoon select [8]' })
+funmap('n', '<leader>9', function()
   harpoon:list():select(9)
-end)
-
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+end, add_opts { desc = '[H]arpoon select [9]' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
