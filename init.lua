@@ -548,10 +548,16 @@ require('lazy').setup({
       signature = { enabled = true, window = { border = 'single' } },
     },
   },
-
-  { -- You can easily change to a different colorscheme.
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
     'folke/tokyonight.nvim',
+    'savq/melange-nvim',
+    'bluz71/vim-moonfly-colors',
+    'jacoborus/tender.vim',
+    'datsfilipe/vesper.nvim',
+    'lunarvim/onedarker.nvim',
+    'pauchiner/pastelnight.nvim',
+    'thebigcicca/gruverboxer-material.nvim',
+  {
+    'vague2k/vague.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
       ---@diagnostic disable-next-line: missing-fields
@@ -560,7 +566,7 @@ require('lazy').setup({
           comments = { italic = false }, -- Disable italics in comments
         },
       }
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'vague'
     end,
   },
 
