@@ -610,12 +610,24 @@ require('lazy').setup({
       auto_install = true,
       highlight = {
         enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
+        disable = function(lang, bufnr)
+          return vim.api.nvim_buf_line_count(bufnr) > 10000
+        end,
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby', 'ocaml' } },
+      incremental_selection = {
+        enable = true,
+        disable = function(lang, bufnr)
+          return vim.api.nvim_buf_line_count(bufnr) > 10000
+        end,
+        keymaps = {
+          init_selection = 'gh',
+          node_decremental = 'gj',
+          node_incremental = 'gk',
+          scope_incremental = 'gl',
+        },
+      },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
