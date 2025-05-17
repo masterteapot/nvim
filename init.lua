@@ -62,39 +62,18 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- adjusting default tabwidth for certain file types
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'lua', 'javascript', 'typescript', 'html', 'css', 'json' },
+  callback = function()
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.expandtab = true
+  end,
+})
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.hl.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -102,6 +81,60 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.hl.on_yank {
       timeout = 50,
     }
+  end,
+})
+
+-- I don't like the default colors
+vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
+  pattern = '*',
+  desc = 'Changing statusline highlighting',
+  callback = function()
+    local function to_hex(color)
+      if not color then
+        return '#333333'
+      end
+      return string.format('#%06x', color)
+    end
+    -- local visual = vim.api.nvim_get_hl(0, { name = 'Visual' })
+    local cl = vim.api.nvim_get_hl(0, { name = 'CursorLine' })
+    -- local var = vim.api.nvim_get_hl(0, { name = '@variable' })
+    local func = vim.api.nvim_get_hl(0, { name = '@function' })
+    -- local tp = vim.api.nvim_get_hl(0, { name = '@type' })
+    local kw = vim.api.nvim_get_hl(0, { name = '@keyword' })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineModeNormal', {
+      bg = to_hex(func.fg),
+      fg = '#ffffff',
+    })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineModeInsert', {
+      bg = to_hex(func.fg),
+      fg = '#ffffff',
+    })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineModeVisual', {
+      bg = to_hex(func.fg),
+      fg = '#ffffff',
+    })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineModeReplace', {
+      bg = to_hex(func.fg),
+      fg = '#ffffff',
+    })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineModeCommand', {
+      bg = to_hex(func.fg),
+      fg = '#ffffff',
+    })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineModeOther', {
+      bg = to_hex(func.bg),
+      fg = '#ffffff',
+    })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineFilename', {
+      bg = to_hex(cl.bg),
+    })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineFileinfo', {
+      bg = to_hex(kw.fg),
+      fg = '#111111',
+    })
+    vim.api.nvim_set_hl(0, 'MiniStatuslineInactive', {
+      bg = to_hex(cl.bg),
+    })
   end,
 })
 
@@ -143,7 +176,9 @@ require('lazy').setup({
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
+      preset = 'modern',
       delay = 0,
+
       icons = {
         -- set icon mappings to true if you have a Nerd Font
         mappings = vim.g.have_nerd_font,
@@ -548,14 +583,14 @@ require('lazy').setup({
       signature = { enabled = true, window = { border = 'single' } },
     },
   },
-    'folke/tokyonight.nvim',
-    'savq/melange-nvim',
-    'bluz71/vim-moonfly-colors',
-    'jacoborus/tender.vim',
-    'datsfilipe/vesper.nvim',
-    'lunarvim/onedarker.nvim',
-    'pauchiner/pastelnight.nvim',
-    'thebigcicca/gruverboxer-material.nvim',
+  'folke/tokyonight.nvim',
+  'savq/melange-nvim',
+  'bluz71/vim-moonfly-colors',
+  'jacoborus/tender.vim',
+  'datsfilipe/vesper.nvim',
+  'lunarvim/onedarker.nvim',
+  'pauchiner/pastelnight.nvim',
+  'thebigcicca/gruverboxer-material.nvim',
   {
     'vague2k/vague.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
@@ -596,18 +631,24 @@ require('lazy').setup({
       --  and try some other statusline plugin
       local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
+      statusline.setup {
+        use_icons = vim.g.have_nerd_font,
+        content = {
+          active = function()
+            local mode, filename, fileinfo = MiniStatusline.section_mode({}), MiniStatusline.section_filename({}), MiniStatusline.section_fileinfo({})
+            return MiniStatusline.combine_groups {
+              { hl = 'MiniStatuslineModeNormal', strings = { mode } },
+              { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+              { hl = 'MiniStatuslineFilename', strings = { filename } },
+              -- devinfo section intentionally omitted
+            }
+          end,
+        },
+      }
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
         return '%2l:%-2v'
       end
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
   { -- Highlight, edit, and navigate code
@@ -951,3 +992,30 @@ end)
 vim.keymap.set('n', '<leader>9', function()
   harpoon:list():select(9)
 end)
+
+-- [[ Basic Keymaps ]]
+--  See `:help vim.keymap.set()`
+
+-- Clear highlights on search when pressing <Esc> in normal mode
+--  See `:help hlsearch`
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- Diagnostic keymaps
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
+-- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
+-- is not what someone will guess without a bit more experience.
+--
+-- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
+-- or just use <C-\><C-n> to exit terminal mode
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+-- Keybinds to make split navigation easier.
+--  Use CTRL+<hjkl> to switch between windows
+--
+--  See `:help wincmd` for a list of all window commands
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
