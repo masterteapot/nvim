@@ -513,7 +513,7 @@ require('lazy').setup({
       },
 
       completion = {
-        menu = { border = 'single' },
+        menu = { border = 'single', draw = { columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon', gap = 1, 'kind' } } } },
         documentation = { window = { border = 'single' }, auto_show = true, auto_show_delay_ms = 500 },
       },
 
@@ -525,7 +525,7 @@ require('lazy').setup({
       },
 
       snippets = { preset = 'luasnip' },
-      fuzzy = { implementation = 'lua' },
+      fuzzy = { implementation = 'prefer_rust_with_warning', sorts = {'score', 'kind'} },
 
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true, window = { border = 'single' } },
