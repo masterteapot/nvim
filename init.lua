@@ -424,7 +424,7 @@ require('lazy').setup({
       }
 
       vim.lsp.config('ocamllsp', {
-        cmd = { 'dune', 'exec', 'ocamllsp' },
+        cmd = { 'ocamllsp' },
         settings = {
           codelens = { enable = true },
           inlayHints = { enable = true },
@@ -887,6 +887,8 @@ keymap('t', '<A-l>', '<C-\\><C-N><C-w>l', term_opts)
 keymap('t', '<Esc>', '<C-\\><C-n>', term_opts)
 
 -- LSP Keymaps
+funmap('n', 'gd', vim.lsp.buf.definition, add_opts { desc = '[G]o to [D]efinition' })
+funmap('n', 'gi', vim.lsp.buf.implementation, add_opts { desc = '[G]o to [I]mplementation' })
 funmap('n', '<leader>lbi', vim.lsp.buf.implementation, add_opts { desc = '[L]sp [B]uffer [I]mplementation' })
 funmap('n', '<leader>lbr', vim.lsp.buf.references, add_opts { desc = '[L]sp [B]uffer [R]eferences' })
 funmap('n', '<leader>lbd', vim.lsp.buf.definition, add_opts { desc = '[L]sp [B]uffer [D]efinition' })
