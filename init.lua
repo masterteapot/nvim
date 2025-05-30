@@ -61,10 +61,13 @@ vim.o.scrolloff = 10
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 vim.o.confirm = true
+vim.opt_local.tabstop = 4
+vim.opt_local.shiftwidth = 4
+vim.opt_local.expandtab = true
 
 -- adjusting default tabwidth for certain file types
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'lua', 'javascript', 'typescript', 'html', 'css', 'json' },
+  pattern = { 'lua', 'javascript', 'typescript', 'html', 'css', 'json', 'ocaml' },
   callback = function()
     vim.opt_local.tabstop = 2
     vim.opt_local.shiftwidth = 2
@@ -407,6 +410,7 @@ require('lazy').setup({
 
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'black',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -424,7 +428,7 @@ require('lazy').setup({
       }
 
       vim.lsp.config('ocamllsp', {
-        cmd = { 'dune', 'exec', 'ocamllsp' },
+        cmd = { 'ocamllsp' },
         settings = {
           codelens = { enable = true },
           inlayHints = { enable = true },
@@ -433,6 +437,7 @@ require('lazy').setup({
         server_capabilities = { semanticTokensProvider = false },
         filetypes = { 'ocaml', 'ocaml.menhir', 'ocaml.interface', 'ocaml.ocamllex', 'reason', 'dune', '.ocamlformat' },
         capabilities = capabilities,
+        init_options = { dune_support = false },
       })
       vim.lsp.enable 'ocamllsp'
     end,
@@ -458,6 +463,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         ocaml = { 'ocamlformat' },
+        python = { 'isort', 'black' },
       },
       formatters = {
         ocamlformat = {
@@ -470,6 +476,7 @@ require('lazy').setup({
             'sparse',
           },
         },
+        black = {},
       },
     },
   },
@@ -525,7 +532,7 @@ require('lazy').setup({
       },
 
       snippets = { preset = 'luasnip' },
-      fuzzy = { implementation = 'prefer_rust_with_warning', sorts = {'score', 'kind'} },
+      fuzzy = { implementation = 'prefer_rust_with_warning', sorts = { 'score', 'kind' } },
 
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true, window = { border = 'single' } },
