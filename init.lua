@@ -426,7 +426,6 @@ require('lazy').setup({
           end,
         },
       }
-
       vim.lsp.config('ocamllsp', {
         cmd = { 'ocamllsp' },
         settings = {
@@ -440,6 +439,7 @@ require('lazy').setup({
         init_options = { dune_support = false },
       })
       vim.lsp.enable 'ocamllsp'
+      vim.lsp.enable 'zls'
     end,
   },
 
