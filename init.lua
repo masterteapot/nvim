@@ -406,6 +406,7 @@ require('lazy').setup({
         'gopls',
         'pyright',
         'lua_ls',
+        'typescript-language-server'
       }
 
       vim.list_extend(ensure_installed, {
@@ -440,6 +441,7 @@ require('lazy').setup({
         init_options = { dune_support = false },
       })
       vim.lsp.enable 'ocamllsp'
+      vim.lsp.enable 'zls'
     end,
   },
 
