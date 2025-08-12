@@ -427,7 +427,6 @@ require('lazy').setup({
           end,
         },
       }
-
       vim.lsp.config('ocamllsp', {
         cmd = { 'ocamllsp' },
         settings = {
