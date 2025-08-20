@@ -393,6 +393,7 @@ require('lazy').setup({
           codelens = { enable = true },
           inlayHints = { enable = true },
           syntaxDocumentation = { enable = true },
+          merlinJumpCodeActions = { enable = true },
         },
         server_capabilities = { semanticTokensProvider = false },
         filetypes = { 'ocaml', 'ocaml.menhir', 'ocaml.interface', 'ocaml.ocamllex', 'reason', 'dune', '.ocamlformat' },
@@ -870,6 +871,8 @@ end, add_opts { desc = '[L]sp [D]iagnostics' })
 funmap('n', '<leader>lr', vim.lsp.buf.rename, add_opts { desc = '[L]sp [R]ename' })
 funmap('n', '<leader>lc', vim.lsp.buf.code_action, add_opts { desc = '[L]sp [C]ode action' })
 funmap('n', '<leader>lf', vim.lsp.buf.format, add_opts { desc = '[L]sp [F]ormat' })
+funmap('n', '<leader>llr', vim.lsp.codelens.refresh, add_opts { desc = '[L]sp Code-[L]ens [R]efresh' })
+funmap('n', '<leader>llc', vim.lsp.codelens.clear, add_opts { desc = '[L]sp Code-[L]ens [C]lear' })
 funmap('n', 'K', function()
   vim.lsp.buf.hover { border = 'single' }
 end, add_opts { desc = '[K] for hover' })
