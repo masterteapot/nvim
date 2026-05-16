@@ -35,6 +35,16 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = {'odin'},
+  callback = function()
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.expandtab = false
+  end,
+})
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -508,6 +518,7 @@ require('lazy').setup({
   'lunarvim/onedarker.nvim',
   'pauchiner/pastelnight.nvim',
   'thebigcicca/gruverboxer-material.nvim',
+  'tribela/transparent.nvim',
   {
     'vague2k/vague.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
