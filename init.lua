@@ -135,7 +135,7 @@ require('lazy').setup({
     },
   },
 
-  { -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
@@ -162,7 +162,7 @@ require('lazy').setup({
     event = 'VimEnter',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      { -- If encountering errors, see telescope-fzf-native README for installation instructions
+      {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
         cond = function()
@@ -170,33 +170,18 @@ require('lazy').setup({
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
-      -- [[ Configure Telescope ]]
-      -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
         },
       }
-
-      -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
-
-      -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
       vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
@@ -208,26 +193,18 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
       vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[F]ind Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-
-      -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
-        -- You can pass additional configuration to Telescope to change the theme, layout, etc.
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
           previewer = false,
         })
       end, { desc = '[/] Fuzzily search in current buffer' })
-
-      -- It's also possible to pass additional configuration options.
-      --  See `:help telescope.builtin.live_grep()` for information about particular keys
       vim.keymap.set('n', '<leader>f/', function()
         builtin.live_grep {
           grep_open_files = true,
           prompt_title = 'Live Grep in Open Files',
         }
       end, { desc = '[F]ind [/] in Open Files' })
-
-      -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>fn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[F]ind [N]eovim files' })
@@ -255,7 +232,7 @@ require('lazy').setup({
       'mason-org/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       -- Useful status updates for LSP.
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',    opts = {} },
       -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
     },
@@ -272,8 +249,8 @@ require('lazy').setup({
           map('<leader>fli', require('telescope.builtin').lsp_implementations, '[F]ind [L]sp [I]mplementation')
           map('<leader>fld', require('telescope.builtin').lsp_definitions, '[F]ind [L]sp [D]efinition')
           map('<leader>flD', vim.lsp.buf.declaration, '[F]ind [L]sp [D]eclaration')
-          map('<leader>fds', require('telescope.builtin').lsp_document_symbols, '[F]ind [D]ocument [S]ymbols')
-          map('<leader>fws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[F]ind [W]orkspace [S]ymbols')
+          map('<leader>fyd', require('telescope.builtin').lsp_document_symbols, '[F]ind s[Y]mbols [D]ocument')
+          map('<leader>fyw', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[F]ind s[Y]mbols [W]orkspace ')
           map('<leader>ftd', require('telescope.builtin').lsp_type_definitions, '[F]ind [T]ype [D]efinition')
           local function client_supports_method(client, method, bufnr)
             if vim.fn.has 'nvim-0.11' == 1 then
@@ -366,7 +343,7 @@ require('lazy').setup({
         'gopls',
         'pyright',
         'lua_ls',
-        'typescript-language-server'
+        'typescript-language-server',
       }
 
       vim.list_extend(ensure_installed, {
@@ -552,11 +529,12 @@ require('lazy').setup({
         use_icons = vim.g.have_nerd_font,
         content = {
           active = function()
-            local mode, filename, fileinfo = MiniStatusline.section_mode {}, MiniStatusline.section_filename {}, MiniStatusline.section_fileinfo {}
+            local mode, filename, fileinfo = MiniStatusline.section_mode {}, MiniStatusline.section_filename {},
+                MiniStatusline.section_fileinfo {}
             return MiniStatusline.combine_groups {
               { hl = 'MiniStatuslineModeNormal', strings = { mode } },
-              { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
-              { hl = 'MiniStatuslineFilename', strings = { filename } },
+              { hl = 'MiniStatuslineFileinfo',   strings = { fileinfo } },
+              { hl = 'MiniStatuslineFilename',   strings = { filename } },
               -- devinfo section intentionally omitted
             }
           end,
@@ -873,6 +851,7 @@ funmap('n', '<leader>lc', vim.lsp.buf.code_action, add_opts { desc = '[L]sp [C]o
 funmap('n', '<leader>lf', vim.lsp.buf.format, add_opts { desc = '[L]sp [F]ormat' })
 funmap('n', '<leader>llr', vim.lsp.codelens.refresh, add_opts { desc = '[L]sp Code-[L]ens [R]efresh' })
 funmap('n', '<leader>llc', vim.lsp.codelens.clear, add_opts { desc = '[L]sp Code-[L]ens [C]lear' })
+vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist, { desc = '[L]sp diagnostic [Q]uickfix list' })
 funmap('n', 'K', function()
   vim.lsp.buf.hover { border = 'single' }
 end, add_opts { desc = '[K] for hover' })
