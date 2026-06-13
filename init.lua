@@ -461,7 +461,7 @@ require('lazy').setup({
       },
 
       completion = {
-        menu = { auto_show = false, auto_show_delay_ms = 500},
+        menu = { auto_show = false, auto_show_delay_ms = 500 },
         documentation = { auto_show = false, auto_show_delay_ms = 500 },
       },
 
@@ -486,7 +486,8 @@ require('lazy').setup({
     config = function()
       -- ensure basic parser are installed
       local parsers =
-        { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'ocaml', 'odin', 'css', 'python' }
+      { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'ocaml',
+        'odin', 'css', 'python' }
       require('nvim-treesitter').install(parsers)
 
       ---@param buf integer
