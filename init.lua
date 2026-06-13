@@ -64,7 +64,7 @@ vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
   callback = function()
     local function to_hex(color)
       if not color then
-        return '#333333'
+        return '#777777'
       end
       return string.format('#%06x', color)
     end
@@ -952,3 +952,6 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- Turn off transparency
+vim.cmd.TransparentDisable()
