@@ -145,7 +145,7 @@ require('lazy').setup({
     },
   },
 
-  {                     -- Useful plugin to show you pending keybinds.
+  { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
@@ -180,7 +180,7 @@ require('lazy').setup({
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       require('telescope').setup {
@@ -242,7 +242,7 @@ require('lazy').setup({
       'mason-org/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       -- Useful status updates for LSP.
-      { 'j-hui/fidget.nvim',    opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
       -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
     },
@@ -387,6 +387,9 @@ require('lazy').setup({
         capabilities = capabilities,
         init_options = { dune_support = false },
       })
+      vim.lsp.config('glsl_analyzer', {
+        filetypes = { 'glsl', 'vert', 'frag', 'vs', 'fs' },
+      })
       vim.lsp.enable 'ocamllsp'
       vim.lsp.enable 'zls'
     end,
@@ -485,9 +488,24 @@ require('lazy').setup({
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
       -- ensure basic parser are installed
-      local parsers =
-      { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'ocaml',
-        'odin', 'css', 'python' }
+      local parsers = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'ocaml',
+        'odin',
+        'css',
+        'python',
+        'glsl',
+      }
       require('nvim-treesitter').install(parsers)
 
       ---@param buf integer
@@ -502,8 +520,8 @@ require('lazy').setup({
 
         -- enables treesitter based folds
         -- for more info on folds see `:help folds`
-        -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        -- vim.wo.foldmethod = 'expr'
+        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.wo.foldmethod = 'expr'
 
         -- check if treesitter indentation is available for this language, and if so enable it
         -- in case there is no indent query, the indentexpr will fallback to the vim's built in one
@@ -597,12 +615,11 @@ require('lazy').setup({
         use_icons = vim.g.have_nerd_font,
         content = {
           active = function()
-            local mode, filename, fileinfo = MiniStatusline.section_mode {}, MiniStatusline.section_filename {},
-                MiniStatusline.section_fileinfo {}
+            local mode, filename, fileinfo = MiniStatusline.section_mode {}, MiniStatusline.section_filename {}, MiniStatusline.section_fileinfo {}
             return MiniStatusline.combine_groups {
               { hl = 'MiniStatuslineModeNormal', strings = { mode } },
-              { hl = 'MiniStatuslineFileinfo',   strings = { fileinfo } },
-              { hl = 'MiniStatuslineFilename',   strings = { filename } },
+              { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+              { hl = 'MiniStatuslineFilename', strings = { filename } },
               -- devinfo section intentionally omitted
             }
           end,
@@ -955,3 +972,18 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- Turn off transparency
 vim.cmd.TransparentDisable()
+
+vim.filetype.add {
+  pattern = {
+    -- The '%.fs$' tells Neovim to catch anything ending exactly in .fs
+    -- and force it to be glsl, overriding the fsharp default
+    ['.*%.fs$'] = 'glsl',
+    ['.*%.vs$'] = 'glsl',
+  },
+}
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = { '*.fs', '*.vs' },
+  callback = function()
+    vim.bo.filetype = 'glsl'
+  end,
+})
