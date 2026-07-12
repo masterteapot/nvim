@@ -21,6 +21,10 @@ vim.o.inccommand = 'split'
 vim.o.cursorline = true
 vim.o.scrolloff = 10
 vim.o.confirm = true
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
 vim.opt_local.tabstop = 4
 vim.opt_local.shiftwidth = 4
 vim.opt_local.expandtab = true
@@ -759,11 +763,12 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   require 'kickstart.plugins.lsp',
+  require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
